@@ -413,7 +413,8 @@ msg=bef+msg+aft;
 //document.getElementById('err').innerHTML= msg;
 loopSleep(xx,rate,function(i){
 sendMessage(msg);
-document.getElementById('xxint').value= xx-i-1;
+ if(document.getElementById('xxint')){
+document.getElementById('xxint').value= xx-i-1;}
 });
 function sendMessage(msg){
 loopint++;
