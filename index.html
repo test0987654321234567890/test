@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFF-APP</title>
+    <link href="style.css" rel="stylesheet">
+    
+</head>
+<body>
+        <h2>LIFFツールv2 !!!!悪用厳禁!!!!</h2>
+        <p>name:<span id="name">name</span></p>
+        <p>type:<span id="typ">type</span></p>
+        <p>error:<span id="err"></span></p>
+        <button type="button" onclick=lif() >LIFFで続ける</button><button type="button" onclick=phone() >外部ブラウザで実行</button><button type="button" onclick=pc() >PCで実行(PCに転送)</button>
+        <br><button type="button" onclick=clos() >閉じる</button>
+        <br>
+        <br>
+        <p>アップデート内容</p><ul>
+          <li>Flexユニコを追加しました</li><li>Altユニコはline側で対策されたため使えなくなりました。Flexユニコを利用してください。</li>
+          <li>liffのapiを改造して外部ブラウザ等でも動くようにしました。PCで複垢同時連投するときなどに便利です。</li>
+          <li>通報リンク↔招待リンクの変換機能を追加しました</li>
+        </ul>
+        <p><a href="https://github.com/piloking/LINE-LIFF-Unicode">ソース</a></p>
+        <p>info:<span id="info"></span></p>
+        <p>&copy; 2023- <a href="https://github.com/piloking/">piloking</a>&<a href="https://github.com/EdamAme-x">amex</a></p>
+    <script src='https://static.line-scdn.net/liff/edge/2/sdk.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script>
+        const name = '名前が不明です';
+        const liffId='1661226722-beANnaeG';
+        const config = {
+            "debug": !1
+        }
+
+        liff.init({
+            liffId : liffId // Use own liffId
+        }).then(() => {
+            getProfile();
+        }).catch((err) => {
+            document.getElementById('err').innerHTML= err
+        }).then(() => {
+            isliff();
+        }).catch((err) => {
+            document.getElementById('err').innerHTML= err    
+        }).then(() => {
+            gettype();
+        }).catch((err) => {
+            document.getElementById('err').innerHTML= err
+        })
+
+        function getProfile(){
+            liff.getProfile()
+            .then((profile) => {
+                const name = profile.displayName;
+                const displayName = document.getElementById('name');
+                displayName.innerHTML= name;
+            })
+            .catch((err) => {
+                document.getElementById('err').innerHTML= err
+            });
+        }
+
+        function gettype(){
+            const context = liff.getContext();
+
+            document.getElementById('typ').innerHTML= context.type
+            
+        }
+        
+        function phone(){
+            const token=liff.getAccessToken();
+            liff.openWindow({
+                url: `https://piloking.github.io/LINE-LIFF-Unicode/LIFFtokenTool/index.html#${token}`,
+                external: true,
+            })
+        }
+        function pc(){
+            const token=liff.getAccessToken();
+            liff.openWindow({url: "https://line.me/R/share?text=https%3A%2F%2Fpiloking.github.io%2FLINE-LIFF-Unicode%2FLIFFtokenTool%2Findex.html%23"+token});
+        }
+        function lif(){
+            const token=liff.getAccessToken();
+            location.href=`https://piloking.github.io/LINE-LIFF-Unicode/LIFFtokenTool/index.html#${token}`
+        }
+        function clos(){
+            location.href="https://line.me/R/nv/chat"
+        }
+        function isliff(){
+            if (!(Cookies.get("isAgree"))){
+                location.href='https://piloking.github.io/LINE-LIFF-Unicode/agree.html'
+        }
+            const context = JSON.stringify(liff.getContext());
+            const idtext = JSON.stringify(liff.getDecodedIDToken());
+            const coo = JSON.stringify(Cookies.get());
+            const access = liff.getAccessToken();
+            document.getElementById('info').innerHTML='TOKEN<br>'+access+'<br>ID<br>'+idtext+'<br>CONTEXT<br>'+context+'<br>COOKIE<br>'+coo;
+        }
+
+    </script>
+</body>
+</html>
