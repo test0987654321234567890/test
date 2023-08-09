@@ -5,12 +5,12 @@
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIFF-APP</title>
+    <title>LIFF-tool</title>
     <link href="style.css" rel="stylesheet">
     
 </head>
 <body>
-        <h2>LIFFツールv2 !!!!悪用厳禁!!!!</h2>
+        <h2>LIFFツールv3 !!!!悪用厳禁!!!!</h2>
         <p>name:<span id="name">name</span></p>
         <p>type:<span id="typ">type</span></p>
         <p>error:<span id="err"></span></p>
@@ -96,7 +96,7 @@
             const idtext = JSON.stringify(liff.getDecodedIDToken());
             const coo = JSON.stringify(Cookies.get());
             const access = liff.getAccessToken();
-            document.getElementById('info').innerHTML='TOKEN<br>'+access+'<br>ID<br>'+idtext+'<br>CONTEXT<br>'+context+'<br>COOKIE<br>'+coo;
+            document.getElementById('info').innerHTML=location.href;
         }
 
     </script>
