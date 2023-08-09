@@ -5,98 +5,96 @@
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIFF-tool</title>
+    <title>LIFF-APP</title>
     <link href="style.css" rel="stylesheet">
     
 </head>
 <body>
         <h2>LIFFツールv3 !!!!悪用厳禁!!!!</h2>
-        <p>name:<span id="name">name</span></p>
-        <p>type:<span id="typ">type</span></p>
-        <p>error:<span id="err"></span></p>
-        <button type="button" onclick=lif() >LIFFで続ける</button><button type="button" onclick=phone() >外部ブラウザで実行</button><button type="button" onclick=pc() >PCで実行(PCに転送)</button>
-        <br><button type="button" onclick=clos() >閉じる</button>
+        <p><span id="err"> </span></p>
+        <p><span id="info"> </span></p>
+        <button type="button" onclick=pc() >urlを転送</button><button type="button" onclick=clos() >tokenを保持して閉じる</button>
+        <p>メッセージ送信:<input type=text id=test value="てすと"><button type="button" onclick= test() >送信</button></p>
         <br>
-        <br>
-        <p>アップデート内容</p><ul>
-          <li>Flexユニコを追加しました</li><li>Altユニコはline側で対策されたため使えなくなりました。Flexユニコを利用してください。</li>
-          <li>liffのapiを改造して外部ブラウザ等でも動くようにしました。PCで複垢同時連投するときなどに便利です。</li>
-          <li>通報リンク↔招待リンクの変換機能を追加しました</li>
-        </ul>
-        <p><a href="https://github.com/piloking/LINE-LIFF-Unicode">ソース</a></p>
-        <p>info:<span id="info"></span></p>
         <p>&copy; 2023- <a href="https://github.com/piloking/">piloking</a>&<a href="https://github.com/EdamAme-x">amex</a></p>
-    <script src='https://static.line-scdn.net/liff/edge/2/sdk.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
     <script>
-        const name = '名前が不明です';
-        const liffId='1661226722-beANnaeG';
         const config = {
             "debug": !1
         }
+        var token;
+        liff_init();
 
-        liff.init({
-            liffId : liffId // Use own liffId
-        }).then(() => {
-            getProfile();
-        }).catch((err) => {
-            document.getElementById('err').innerHTML= err
-        }).then(() => {
+        function liff_init(){
+            var hashString = location.hash.substr(1);
+            var hashAry = hashString.split('&');
+            token=hashAry[1].substr(13);
+            init(token);
             isliff();
-        }).catch((err) => {
-            document.getElementById('err').innerHTML= err    
-        }).then(() => {
-            gettype();
-        }).catch((err) => {
-            document.getElementById('err').innerHTML= err
-        })
-
-        function getProfile(){
-            liff.getProfile()
-            .then((profile) => {
-                const name = profile.displayName;
-                const displayName = document.getElementById('name');
-                displayName.innerHTML= name;
-            })
-            .catch((err) => {
-                document.getElementById('err').innerHTML= err
-            });
         }
+        function init(t){
+            fetch(`https://api.line.me/oauth2/v2.1/verify?access_token=${t}`, {
+                "headers": {"accept": "application/json",
+                "accept-language": "ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7",
+                "cache-control": "no-cache",
+                "content-type": "application/json",
+                "pragma": "no-cache",
+                "sec-ch-ua": "\"Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"115\", \"Chromium\";v=\"115\"",
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": "\"Windows\"",
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "cross-site"
+                },
+  "referrer": "https://piloking.github.io/",
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": null,
+  "method": "GET",
+  "mode": "cors",
+  "credentials": "omit"
+}).then((data) => data.json())
+  .then((res) =>{
+    console.log(res);
+    token=null;
+    if (res.error){
+      document.getElementById('err').innerHTML= "Error: "+res.error;
+    };
+    if (res.scope){
+      document.getElementById('err').innerHTML= "Success: "+res.scope;
+      token=t;
+    }});
+  }
 
-        function gettype(){
-            const context = liff.getContext();
-
-            document.getElementById('typ').innerHTML= context.type
-            
-        }
-        
-        function phone(){
-            const token=liff.getAccessToken();
-            liff.openWindow({
-                url: `https://piloking.github.io/LINE-LIFF-Unicode/LIFFtokenTool/index.html#${token}`,
-                external: true,
-            })
-        }
+  function send(m){
+    let j = JSON.stringify({messages:m});
+    fetch("https://api.line.me/message/v3/share", {"headers": {"accept": "application/json","accept-language": "ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7","authorization": `Bearer ${token}`,"cache-control": "no-cache","content-type": "application/json","pragma": "no-cache","sec-fetch-dest": "empty","sec-fetch-mode": "cors","sec-fetch-site": "cross-site","x-requested-with": "jp.naver.line.android"},"referrerPolicy": "strict-origin-when-cross-origin","body": j,"method": "POST","mode": "cors","credentials": "omit"})
+  .catch((err) => document.getElementById('err').innerHTML="Error: "+err)
+  .then((data) => data.json())
+  .then((res) => {
+    console.log(res);
+    if (res.message){
+      document.getElementById('err').innerHTML="Error: "+res.message;
+      return false
+    }
+    if (res.status){
+      document.getElementById('err').innerHTML="Send: "+res.status;
+      return true
+    }});
+  }
         function pc(){
-            const token=liff.getAccessToken();
-            liff.openWindow({url: "https://line.me/R/share?text=https%3A%2F%2Fpiloking.github.io%2FLINE-LIFF-Unicode%2FLIFFtokenTool%2Findex.html%23"+token});
-        }
-        function lif(){
-            const token=liff.getAccessToken();
-            location.href=`https://piloking.github.io/LINE-LIFF-Unicode/LIFFtokenTool/index.html#${token}`
+            open("https://line.me/R/share?text=https%3A%2F%2Fpiloking.github.io%2FLINE-LIFF-Unicode%2FLIFFtokenTool%2Findex.html%23"+token);
         }
         function clos(){
-            location.href="https://line.me/R/nv/chat"
+            open("https://line.me/R/nv/chat")
         }
         function isliff(){
-        //    if (!(Cookies.get("isAgree"))){
-        //        location.href='https://piloking.github.io/LINE-LIFF-Unicode/agree.html'
-        //}
-            const context = JSON.stringify(liff.getContext());
-            const idtext = JSON.stringify(liff.getDecodedIDToken());
-            const coo = JSON.stringify(Cookies.get());
-            const access = liff.getAccessToken();
-            document.getElementById('info').innerHTML=location.href;
+            //if (!(Cookies.get("isAgree"))){
+            //    location.href='./agree.html'}
+            document.getElementById('info').innerHTML=token;
+        }
+        function test(){
+            let test = document.getElementById('test').value;
+            send([{type:"text",text:test}])
         }
 
     </script>
