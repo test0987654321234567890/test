@@ -104,7 +104,6 @@ isliff();
 } else {
 document.getElementById('err').innerHTML = "tokenが指定されていません"
 }
-document.getElementById('token').value=token;
 }
 function set(){
 token = document.getElementById('token').value;
@@ -140,6 +139,7 @@ document.getElementById('err').innerHTML = "Error: " + res.error;
 ;if (res.scope) {
 document.getElementById('err').innerHTML = "Success: " + res.scope;
 token = t;
+document.getElementById('token').value=token;
 }
 }
 );
