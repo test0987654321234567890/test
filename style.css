@@ -1,9 +1,5 @@
 body {
-  background-color: #000;
-}
-
-h2{
-  color: red;
+  background-color: #222;
 }
 
 body,a,a:visited{
@@ -26,13 +22,14 @@ button {
     padding: 4px 12px;
     outline: none;
     border-radius: 3px;
-    background-color: red;
     font-size: 12px;
     line-height: 24px;
     font-weight: 700;
-    color: #fff;
-    border:none;
     margin: 2px;
+    color: #06c755;
+    background-color: #fff;
+    border: #06c755 1px solid;
+  
 }
 
 input,textarea {
