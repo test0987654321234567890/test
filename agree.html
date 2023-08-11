@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>利用規約に同意してください</title>
+    <link href="./style.css" rel="stylesheet">
+    
+</head>
+<body>
+    <h3>・利用者は、このLIFFアプリ（https://piloking.github.io/LINE-LIFF-Unicode）の利用に際し、最初に本利用規約に同意する必要があります。本利用規約に同意しない場合は、このLIFFアプリを利用できません。<br>
+        ・「同意する」をクリックすることにより、利用規約の条件に同意したことになります<br>
+        ・利用者は、このLIFFアプリを通じて作成し、送信し又は表示するデータ、コンテンツ、並びに利用者の行為の結果について単独で責任を負い、開発者(piloking及びamex)がこれらにつき利用者又は第三者に対していかなる責任も負わないことに同意します。<br>
+    </h3>
+    <button type="button" onclick=agree()>同意する</button>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script>
+        function agree(){
+            Cookies.set('isAgree', "true", {expires: 50});
+            location.href='./index.html'
+        }
+    </script>
+</body>
+</html>
