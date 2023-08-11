@@ -202,7 +202,7 @@ function clos() {
 open("https://line.me/R/nv/home")
 }
 function isliff() {
-if(!Cookies.get("isAgree")){
+if(!(Cookies.get("isAgree"))){
 location.href="./agree.html";
 }
 }
