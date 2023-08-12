@@ -37,20 +37,20 @@ var helpHtml = `<h2>～各表示と機能の説明～</h2>
 var urlHenkan = `<p>url:<input type=text id=url><button type="button" onclick= OCurl()>変換</button></p><p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><button type="button" onclick= clip(0)>通報リンクをコピー</button><br><p>参加リンク<br><span id="join"></span></p><button type="button" onclick= clip(1)>参加リンクをコピー</button><br><p>招待リンク<br><span id="inv"></span></p><button type="button" onclick= clip(2)>招待リンクをコピー</button><br><p>webデータ:<span id="squ"></span></p><p>ticket:<span id="tic"></span></p>`;
 var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40">
 [{"type": "flex","altText":"あいうえお","contents":{
-    "type": "bubble",
-    "body": {
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-            {
-                "type": "text",
-                "text": "あいうえお",
-                "size": "xl",
-                "weight": "bold",
-                "color": "#f0f000"
-            }
-        ]
-    }
+"type": "bubble",
+"body": {
+"type": "box",
+"layout": "horizontal",
+"contents": [
+{
+"type": "text",
+"text": "あいうえお",
+"size": "xl",
+"weight": "bold",
+"color": "#f0f000"
+}
+]
+}
 }}]
 </textarea><br><button type="button" onclick=flexSend(1) >送信</button><br>
 <section>
@@ -202,7 +202,7 @@ function clos() {
 open("https://line.me/R/nv/home")
 }
 function isliff() {
-if(!(Cookies.get("isAgree"))){
+if(!Cookies.get("isAgree")){
 location.href="./agree.html";
 }
 }
@@ -604,4 +604,7 @@ text:msg
 }
 ])
 }
+}
+function delC(){
+Cookies.remove('isAgree');Cookies.remove('uni');Cookies.remove('1str');Cookies.remove('2str');Cookies.remove('xint');Cookies.remove('xxint');Cookies.remove('rate');Cookies.remove('OCurl');
 }
