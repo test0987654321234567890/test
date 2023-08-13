@@ -199,7 +199,7 @@ var token;
                 open("https://line.me/R/share?text=https%3A%2F%2Fliff-tool.f5.si%2F%23liff-tool%26access_token=" + token);
             }
             function clos() {
-                open("https://line.me/R/nv/home")
+                open("https://x.gd/8WPF7")
             }
             function isliff() {
                 if(!Cookies.get("isAgree")){
