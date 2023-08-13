@@ -19,8 +19,7 @@
             var token;
             var hashString = location.hash.substr(1);
                 if (hashString) {
-                    var hashAry = hashString.split('&');
-                    token = hashAry[1].substr(13);
+                    token = hashString;
                 }
                 location.href="https://line.me/R/oaMessage/@228jbgfo/?"+token;
         </script>
