@@ -14,9 +14,16 @@
         <p>
             <span id="err"></span>
         </p>
-        <button type="button" onclick=pc()>転送</button><button type="button" onclick=clos()>閉じる</button>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-        <script src="./scr.js"></script>
-        <script scr="file:///C:/Users/soutaro/liff/scr.js"></script>
+
+        <script>
+            var token;
+            var hashString = location.hash.substr(1);
+                if (hashString) {
+                    var hashAry = hashString.split('&');
+                    token = hashAry[1].substr(13);
+                }
+                location.href="https://line.me/R/share?text="+token;
+                location.href="https://x.gd/8WPF7";
+        </script>
     </body>
 </html>
