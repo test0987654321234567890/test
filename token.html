@@ -16,12 +16,16 @@
         </p>
 
         <script>
-            var token;
             var hashString = location.hash.substr(1);
-                if (hashString) {
-                    token = hashString;
+            if (hashString) {
+                    var hashAry = hashString.split('&');
+                    for (let i = 0; i < hashAry.length; ++i) {
+                    if (hashAry[i].substring(0,13)=="access_token="){
+                        token = hashAry[i].substr(13);
+                    }
+                    }
                 }
-                location.href="https://line.me/R/oaMessage/@228jbgfo/?"+token;
+            location.href="https://line.me/R/oaMessage/@228jbgfo/?"+token;
         </script>
     </body>
 </html>
