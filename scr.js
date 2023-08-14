@@ -202,6 +202,9 @@ var token;
             function pc() {
                 open("https://line.me/R/share?text=https%3A%2F%2Fliff-tool.f5.si%2F%23liff-tool%26access_token=" + token);
             }
+function pc2() {
+                open("https://line.me/R/share?text=PP-" + location.hash);
+            }
             function clos() {
                 open("https://x.gd/8WPF7")
             }
