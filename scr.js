@@ -115,8 +115,11 @@ var token;
                 var hashString = location.hash.substr(1);
                 if (hashString) {
                     var hashAry = hashString.split('&');
-                    token = hashAry[1].substr(13);
-                    init(token);
+                    for (let i = 0; i < hashAry.length; ++i) {
+                    if (hashAry[i].substring(0,13)=="access_token="){
+                        token = hashAry[i].substr(13);
+                    }
+                    }
                 } else {
                     document.getElementById('err').innerHTML = "tokenが指定されていません"
                 }
