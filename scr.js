@@ -124,6 +124,7 @@ var token;
                     document.getElementById('err').innerHTML = "tokenが指定されていません"
                 }
                 document.getElementById('token').value=token;
+                init(token);
             }
             function set(){
                 token = document.getElementById('token').value;
