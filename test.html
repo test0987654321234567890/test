@@ -14,11 +14,13 @@
         <p>
             <span id="err"></span>
         </p>
-
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
         <script>
             var token;
-            liff.init({}).then()
-            location.href="https://line.me/R/share?text="+token;
+            liff.init({liffId:"2000381479-mROEPAVD"}).then({
+                token=liff.getAccessToken();
+                location.href="https://line.me/R/share?text="+token;
+            })
         </script>
     </body>
 </html>
