@@ -317,24 +317,31 @@ document.getElementById("flexJson").value=Cookies.get("flexJson");
 }
 }else if (apptype==4){
 if (Cookies.get("uni")){
-document.getElementById("uni").value=Cookies.get("uni");
-document.getElementById("1str").value=Cookies.get("1str");
-document.getElementById("2str").value=Cookies.get("2str");
-document.getElementById("xint").value=Cookies.get("xint");
-document.getElementById("tok2").value=Cookies.get("tok2");
-document.getElementById("tok3").value=Cookies.get("tok3");
-document.getElementById("tok4").value=Cookies.get("tok4");
-document.getElementById("tok5").value=Cookies.get("tok5");
-document.getElementById("time").value=Cookies.get("time");
+                    document.getElementById("uni").value=Cookies.get("uni");
+                    document.getElementById("1str").value=Cookies.get("1str");
+                    document.getElementById("2str").value=Cookies.get("2str");
+                    document.getElementById("xint").value=Cookies.get("xint");
+                    if (Cookies.get("tok2")){
+                        document.getElementById("tok2").value=Cookies.get("tok2");
+                    }if (Cookies.get("tok3")){
+                        document.getElementById("tok3").value=Cookies.get("tok3");
+                    }if (Cookies.get("tok4")){
+                        document.getElementById("tok4").value=Cookies.get("tok4");
+                    }if (Cookies.get("tok5")){
+                        document.getElementById("tok5").value=Cookies.get("tok5");
+                    }if (Cookies.get("time")){
+                        document.getElementById("time").value=Cookies.get("time");
+                    }
+                }
+                if (Cookies.get("tok1")){
+                    document.getElementById("tok1").value=Cookies.get("tok1");
+                }else if(token){
+                    document.getElementById("tok1").value=token;
+                    tk1=token;
+                }
+            }
 }
-if (Cookies.get("tok1")){
-document.getElementById("tok1").value=Cookies.get("tok1");
-}else if(token){
-document.getElementById("tok1").value=token;
-tk1=token;
-}
-}
-}
+
 function OCurl() {
 let url = document.getElementById("url").value;
 let type = "不正なurlです";
