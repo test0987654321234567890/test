@@ -11,16 +11,19 @@
     </head>
     <body>
         <h1>コピー↓</h1>
-        <p>
-            <span id="err"></span>
-        </p>
+        <p><input id="inp" type="text" value="--" /></p>
 <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
         <script>
             var token;
             liff.init({liffId:"2000381479-mROEPAVD"}).then((a)=>{
                 token=liff.getAccessToken();
-                document.getElementById("err").innerHTML=token;
+                document.getElementById("inp").value=token;
             })
+            let inp = document.getElementById('inp');
+
+inp.addEventListener('click', function(){
+	this.select();
+}, false);
         </script>
     </body>
 </html>
