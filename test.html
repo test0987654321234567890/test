@@ -11,7 +11,7 @@
     </head>
     <body>
         <h1>コピー↓</h1>
-        <p><input id="inp" type="text" value="--" /></p>
+        <p><input id="inp" type="text" value="--" /></p><button type="button" onclick=run()>転送</button>
 <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
         <script>
             var token;
@@ -20,10 +20,12 @@
                 document.getElementById("inp").value=token;
             })
             let inp = document.getElementById('inp');
-
 inp.addEventListener('click', function(){
 	this.select();
 }, false);
+	　　function run(){
+		  open("line://share?text="+document.getElementById("inp").value)
+	  }
         </script>
     </body>
 </html>
