@@ -128,7 +128,7 @@ var urlHenkan = `<p>url:<input type=text id=url><button type="button" onclick= O
 
            <p>タイトル<input type="text" id="Vtitle" size="20" value="[投票] "></p>
 
-                             <p>説明文<input type="text" id="Vinfo" size="20" value="投票に参加してみましょう"></p>
+                             <p>説明文<input type="text" id="Vinfo" size="20" value="投票にご参加ください。"></p>
 
             <p>ボタン名<input type="text" id="VbutName" size="20" value="投票する"></p>
 
