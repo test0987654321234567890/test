@@ -121,7 +121,7 @@ function liff_init() {
     if (location.protocol=="http:"){
         location.href="https://liff-tool.f5.si/"+location.hash
     }
-    if (!location.protocol=="file:"){
+    if (!(location.protocol=="file:")){
         isliff();
     }
     if (hashString) {
