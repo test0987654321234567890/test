@@ -58,7 +58,7 @@ var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40">
         ]
     }
 }}]
-</textarea><br><button type="button" onclick=flexSend(1) >送信</button><br>
+</textarea><p><span id="seikeierr"></span></p><button type="button" onclick=flexSend(1) >送信</button><button type="button" onclick=seikei() >整形</button><br>
 <section>
 <h1>投票箱</h1>
 <p>通知メッセージ<input type="text" id="Valt" size="20" value="[投票] "></p>
@@ -458,7 +458,18 @@ function clip(type) {
     navigator.clipboard.writeText(txt);
     alert("コピーしました");
 }
+function seikei() {
+    try {
+    var msg = document.getElementById("flexJson").value;
+    msg = JSON.parse(msg);
+    msg = JSON.stringify(msg,null,2);
+    document.getElementById("flexJson").value = msg;
+} catch (error) {
+    document.getElementById("seikeierr").innerHTML = error;
+}
+}
 function flexSend(type) {
+    seikei();
     var msg = document.getElementById("flexJson").value;
     document.getElementById('err').innerHTML = " "
     Cookies.set('rawjson', msg, {
