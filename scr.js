@@ -41,7 +41,7 @@ var helpHtml = `<h2>～各表示と機能の説明～</h2>
 <h3>Q.liffアプリを利用するとmid(LINEが一意にユーザーに割り当てた識別子)を抜かれますか？</h3>
 <p>A.ありません。liffアプリはuid(サービス提供者ごとにLINEが一意にユーザーに割り当てた識別子)を取得できますが、midに変換することはできません。</p>`;
 var urlHenkan = `<p>url:<input type=text id=url><button type="button" onclick= OCurl()>変換</button></p><p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><p>参加リンク<br><span id="join"></span></p><p>招待リンク<br><span id="inv"></span></p><p>webデータ:<span id="squ"></span></p><p>ticket:<span id="tic"></span></p>`;
-var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40">
+var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" onblur="seikei()">
 [{"type": "flex","altText":"あいうえお","contents":{
     "type": "bubble",
     "body": {
@@ -58,7 +58,7 @@ var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40">
         ]
     }
 }}]
-</textarea><p><span id="seikeierr"></span></p><button type="button" onclick=flexSend(1) >送信</button><button type="button" onclick=seikei() >整形</button><br>
+</textarea><p><span id="seikeierr"></span></p><button type="button" onclick=flexSend(1) >送信</button><br>
 <section>
 <h1>投票箱</h1>
 <p>通知メッセージ<input type="text" id="Valt" size="20" value="[投票] "></p>
