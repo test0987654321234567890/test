@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex ユニコ</title>
+    <link href="./style.css" rel="stylesheet">
+</head>
+<body>
+  <font face="sans-serif">
+  <h1>Flex ユニコ</h1>
+  <p><span id="err"></span></p>
+  <p>投下回数:<input type="number" id="xint" size="5" value="1000">回</p><p>投下間隔:<input type="number" id="rate" size="5" value="700">ミリ秒</p>
+  <span id="but"><button type="button" onclick= run() id="RED">投下</button></span>
+  <p>ユニコ:<input type=text id=uni value="ࣿ" oninput=check()></p>
+  <p>重ねる数:<input type=number id=xuni value="16990" oninput=check()></p>
+  <p>表示するテキスト:<input type=text id="txt" value="$◄████▌=≡≡" oninput=check()></p><p>※$の部分がユニコに置換されます</p>
+  <span id="col2"><p style="background-color: #888;color: #000000;">表示する色:</p></span><input type=text id="col" value="000000" oninput="sample()">
+  <p>通知用テキスト:<input type=text id="alt" value="This is a Flex Bomb"></p>
+  </font>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script>
+  var token = location.hash.substr(1);
+  init(token);
+  getc();
+
+  function set(){
+    token = document.getElementById('token').value;
+    init(token);
+  }
+  function loopSleep(_loopLimit,_interval, _mainFunc){
+    var loopLimit = _loopLimit;
+    var interval = _interval;
+    var mainFunc = _mainFunc;
+    var i = 0;
+    var loopFunc = function () {
+    var result = mainFunc(i);
+    if (result === false) {
+      return;
+      }
+    i = i + 1;
+    if (i < loopLimit) {
+      setTimeout(loopFunc, interval);
+    }
+    }
+    loopFunc();
+    return new Promise((resolve, reject) => {
+    resolve(1);
+  })
+  }
+  
+  function init(t){
+    fetch(`https://api.line.me/oauth2/v2.1/verify?access_token=${t}`, {
+  "headers": {
+    "accept": "application/json",
+    "accept-language": "ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7",
+    "cache-control": "no-cache",
+    "content-type": "application/json",
+    "pragma": "no-cache",
+    "sec-ch-ua": "\"Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"115\", \"Chromium\";v=\"115\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site"
+  },
+  "referrer": "https://piloking.github.io/",
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": null,
+  "method": "GET",
+  "mode": "cors",
+  "credentials": "omit"
+}).then((data) => data.json())
+  .then((res) =>{
+    console.log(res);
+    token=null;
+    if (res.error){
+      document.getElementById('err').innerHTML= "Error: "+res.error;
+    };
+    if (res.scope){
+      document.getElementById('err').innerHTML= "Success: "+res.scope;
+      token=t;
+    }});
+  }
+
+
+  
+  function send(m){
+    let j = JSON.stringify({messages:m});
+    fetch("https://api.line.me/message/v3/share", {"headers": {"accept": "application/json","accept-language": "ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7","authorization": `Bearer ${token}`,"cache-control": "no-cache","content-type": "application/json","pragma": "no-cache","sec-fetch-dest": "empty","sec-fetch-mode": "cors","sec-fetch-site": "cross-site","x-requested-with": "jp.naver.line.android"},"referrerPolicy": "strict-origin-when-cross-origin","body": j,"method": "POST","mode": "cors","credentials": "omit"})
+  .catch((err) => document.getElementById('err').innerHTML="Error: "+err)
+  .then((data) => data.json())
+  .then((res) => {
+    console.log(res);
+    if (res.message){
+      document.getElementById('err').innerHTML="Error: "+res.message;
+      return false
+    }
+    if (res.status){
+      document.getElementById('err').innerHTML="Send: "+res.status;
+      return true
+    }});
+  }
+  function check() {
+    var msg = document.getElementById("uni").value.length;
+    var bef = document.getElementById("txt").value.length;
+    var x = document.getElementById("xuni").value;
+    var len = bef + msg * x;
+    if (len > 17000) {
+        document.getElementById("xuni").value = Math.floor((17000 - bef) / msg);
+        x = document.getElementById("xint").value;
+        len = bef + msg * x;
+        if (document.getElementById('but')) {
+            document.getElementById('but').innerHTML = "<button type=\"button\" onclick=run() >連投開始</button>"
+        }
+    } else {
+        if (document.getElementById('but')) {
+            document.getElementById('but').innerHTML = "<button type=\"button\" onclick=run() >連投開始</button>"
+        }
+    }
+}
+  function run(){
+    let loopint=1;
+    let txt = document.getElementById('txt').value;
+    let uni = document.getElementById('uni').value;
+    let xuni = document.getElementById('xuni').value;
+    let x = document.getElementById('xint').value;
+    let rate = document.getElementById('rate').value;
+    let col = "#"+document.getElementById('col').value;
+    let alt = document.getElementById('alt').value;
+    let flex;
+    setc();
+    uni=uni.repeat(xuni);
+    txt=txt.replace("$",uni);
+    flex = {"type": "flex","altText":alt,"contents": {"type": "carousel","contents": [{"type": "bubble","body": {"type": "box","layout": "horizontal","contents": [{"type": "text","text": txt,"wrap": true,"size": "xl","weight": "bold","color": col}]}}]}};
+    if (x==0){
+      document.getElementById('xint').value=1;
+      return;
+    };
+    document.getElementById('but').innerHTML="<button type=\"button\" onclick= stop() >停止</button>";
+    let msg=[flex,flex,flex,flex];
+    loopSleep(x, rate, function(i) {
+    send(msg);
+    document.getElementById('xint').value= x-i-1;
+    })
+  }
+  function stop(){
+    let x = document.getElementById('xint').value;
+    setc();
+    if (!(x==0)){
+      location.reload()
+    };
+    document.getElementById('but').innerHTML="<button type=\"button\" onclick= run() id=\"RED\">投下</button>";
+  }
+  function sample(){
+    let col=document.getElementById('col').value;
+    document.getElementById('col2').innerHTML=`<p style="background-color: #888;color: #${col};">表示する色:</p>`
+  }
+
+        function setc(){
+            var msg = document.getElementById("uni").value;
+            var txt = document.getElementById("txt").value;
+            var x = document.getElementById("xuni").value;
+            Cookies.set('uni', msg, {expires: 50});
+            Cookies.set('str', txt, {expires: 50});
+            Cookies.set('xint2', x, {expires: 50});
+            Cookies.set('isSave2', "true", {expires: 50});
+        }
+
+        function getc(){
+            if (Cookies.get('isSave2')){
+            document.getElementById("uni").value=Cookies.get('uni');
+            document.getElementById("txt").value=Cookies.get('str');
+            document.getElementById("xuni").value=Cookies.get('xint2');
+            }
+        }
+</script>
+</body>
+</html>
