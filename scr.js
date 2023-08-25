@@ -250,7 +250,7 @@ function uni() {
 }
 function flex() {
     saveApp();
-    button1.innerHTML = `<button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex() id="RED">Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
+    button1.innerHTML = `<button type="button" onclick= altuni()>flex-unicode</button><button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex() id="RED">Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
     app.innerHTML = flexTool;
     apptype = 3;
     setApp();
@@ -267,6 +267,10 @@ function tUni() {
     app.innerHTML = tasiroUni;
     apptype = 4;
     setApp();
+}
+function altuni(){
+    saveApp()
+    location.href="./alt-unicode.html#"+token
 }
 function saveApp() {
     if (apptype == 1) {
