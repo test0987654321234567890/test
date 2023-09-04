@@ -24,7 +24,7 @@ var helpHtml = `<h2>～各表示と機能の説明～</h2>
 <h3>Error:エラーメッセージ ,Success: ,Send: ok</h3><p>それぞれ、送信に失敗/認証に失敗・認証に成功・送信に成功、を表します。認証に失敗した場合正しいurlを使っているか確認してください。</p>
 <h3>liff-token:[] 設定</h3><p>[]の中にtokenを表示しています。tokenを入力して設定を押すと変更できます。</p>
 <h3>tokenを転送</h3><p>開くとメッセージ送信等が外部から可能になるurlを転送する画面を開きます。</p>
-<h3>tokenを保持して閉じる</h3><p>外部からのメッセージ送信等を可能にした状態で画面を閉じます。</p>
+<h3>tokenを保持して閉じる</h3><p>外部からのメッセージ送信等を可能にした状態で画面を閉じます。(androidのみ)</p>
 <h3>メッセージ送信:[] 送信</h3><p>[]の中のテキストを送信します。動作確認等に利用してください。</p>
 <h3>通報リンク変換,ユニコ自動連投,Flexメッセージ生成,使い方/ヘルプ</h3><p>押すとそれぞれの画面を表示します</p>
 <h3>通報リンク変換:</h3>
@@ -303,7 +303,8 @@ function saveApp() {
             expires: 50
         });
     } else if (apptype == 3) {
-        Cookies.set("flexJson", document.getElementById("flexJson").value, {
+        var flexc=document.getElementById("flexJson").value;
+        Cookies.set("flexJson", flexc , {
             expires: 50
         });
     } else if (apptype == 4) {
@@ -388,10 +389,7 @@ function setApp() {
             if (Cookies.get("time")) {
                 document.getElementById("time").value = Cookies.get("time");
             }
-        }
-        if (Cookies.get("tok1")) {
-            document.getElementById("tok1").value = Cookies.get("tok1");
-        } else if (token) {
+        } if (token) {
             document.getElementById("tok1").value = token;
             tk1 = token;
         }
