@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LIFF-APP</title>
+        <link href="./style.css" rel="stylesheet">
+        <link rel="icon" href="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S"/>
+    </head>
+    <body>
+        <h1>LIFF-MOD 生成</h1>
+        <textarea id="scrJs" rows="10" cols="40">
+liffmod.init().then((a)=>liffmod.sendMessages([type:"text",text:"Hello"]))
+        </textarea><button type="button" onclick="henkan()">変換</button>
+        <p>link: <span id="url"></span></p>
+        <br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
+        <script>
+            function base64Encode(...parts) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const offset = reader.result.indexOf(",") + 1;
+      resolve(reader.result.slice(offset));
+    };
+    reader.readAsDataURL(new Blob(parts));
+  });
+}
+function baseurl(base64) {
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=*$/g, '')
+}
+
+
+            function henkan() {
+                let scr=document.getElementById("scrJs").value;
+                base64Encode(scr).then(encoded => 
+                {
+                    encoded=baseurl(encoded)
+                    document.getElementById("url").innerHTML="liff-tool.f5.si/mod/?scrjs="+encoded});
+            }
+        </script>
+    </body>
+    </html>

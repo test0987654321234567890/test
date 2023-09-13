@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LIFF-APP</title>
+        <link href="./style.css" rel="stylesheet">
+        <link rel="icon" href="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S"/>
+    </head>
+    <body>
+        <h1>LIFF-MOD</h1>
+        <span id="buttons"></span>
+        <div id="app"></div><br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
+        <script src="./mod.js"></script>
+        <script id="modScript">
+            function getParam(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+function base(base64url) {
+  let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/');
+  const padding = base64.length % 4;
+  if (padding > 0) {
+    return base64 + '===='.slice(padding);
+  } 
+  return base64;
+}
+function base64D(text, charset) {
+  fetch(`data:text/plain;charset=${charset};base64,` + text).then(response => response.text()).then(text=>{
+    let script = document.createElement('script');
+    script.innerHTML=text;
+    document.body.appendChild(script);
+  });
+}
+            let link=getParam("scrlink");
+            let scrjs=getParam("scrjs");
+            let scripthtml = document.getElementById('modScript');
+            if (link) {
+            let script = document.createElement('script');
+            script.src = link;
+            script.async = true;
+            document.body.appendChild(script);
+            }
+            if (scrjs){
+            scrjs=base64D(base(scrjs),"utf-8");
+            //let script = document.createElement('script');
+            //script.innerHTML=scrjs;
+            //document.body.appendChild(script);
+            }
+        </script>
+    </body>
+</html>
