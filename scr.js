@@ -40,7 +40,7 @@ var helpHtml = `<h2>～各表示と機能の説明～</h2>
 <h2>～よくある質問～</h2>
 <h3>Q.liffアプリを利用するとmid(LINEが一意にユーザーに割り当てた識別子)を抜かれますか？</h3>
 <p>A.ありません。liffアプリはuid(サービス提供者ごとにLINEが一意にユーザーに割り当てた識別子)を取得できますが、midに変換することはできません。</p>`;
-var urlHenkan = `<p>url:<input type=text id=url><button type="button" onclick= OCurl()>変換</button></p><p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><p>参加リンク<br><span id="join"></span></p><p>招待リンク<br><span id="inv"></span></p><p>webデータ:<span id="squ"></span></p><p>ticket:<span id="tic"></span></p>`;
+var urlHenkan = `<p>url:<input type=text id=url><button type="button" onclick= OCurl()>変換</button></p><p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><p>参加リンク<br><span id="join"></span></p><p>招待リンク<br><span id="inv"></span></p><p>webデータ<br><span id="squ"></span></p><p>ticket<br><span id="tic"></span></p>`;
 var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" onblur="seikei()">
 [{"type": "flex","altText":"あいうえお","contents":{
     "type": "bubble",
@@ -60,6 +60,11 @@ var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" o
 }}]
 </textarea><p><span id="seikeierr"></span></p><button type="button" onclick=flexSend(1) >送信</button><br>
 <section>
+<h1>画像url生成</h1>
+<p><a href="line://nv/profile">アイコン画像を変換する画像にして</a>、変換を押してurlに変換できます。変換したurlはアイコンを再度変更しても変わりません。</p>
+<button type="button" onclick= img2url()>変換</button>
+<div id="img_url"><div>
+<br>
 <h1>投票箱</h1>
 <p>通知メッセージ<input type="text" id="Valt" size="20" value="[投票] "></p>
 <p>タイトル<input type="text" id="Vtitle" size="20" value="[投票] "></p>
@@ -862,4 +867,32 @@ function delC() {
     Cookies.remove('rate');
     Cookies.remove('OCurl');
     Cookies.remove('flexJson');
+}
+function img2url() {
+    fetch("https://api.line.me/v2/profile", {
+  "headers": {
+    "accept": "application/json",
+    "accept-language": "ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7",
+    "authorization": `Bearer ${token}`,
+    "cache-control": "no-cache",
+    "content-type": "application/json",
+    "pragma": "no-cache",
+    "sec-ch-ua": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site"
+  },
+  "referrer": "https://line-toolbox.f5.si/",
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": null,
+  "method": "GET",
+  "mode": "cors",
+  "credentials": "omit"
+}).then((data)=>data.json()).then((res)=>{
+    if (res.pictureUrl){
+        document.getElementById("img_url").innerHTML=`<p>変換結果</p><img src="${res.pictureUrl}" alt="img"/><p>url: ${res.pictureUrl}</p>`
+    }
+})
 }
