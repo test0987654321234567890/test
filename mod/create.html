@@ -16,6 +16,7 @@ liffmod.init().then((a)=>liffmod.sendMessages([type:"text",text:"Hello"]))
         </textarea><button type="button" onclick="henkan()">変換</button>
         <p>link: <span id="url"></span></p>
         <br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
         <script>
             function base64Encode(...parts) {
   return new Promise(resolve => {
@@ -30,14 +31,22 @@ liffmod.init().then((a)=>liffmod.sendMessages([type:"text",text:"Hello"]))
 function baseurl(base64) {
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=*$/g, '')
 }
-
+function setc() {
+                var msg = document.getElementById("scrJs").value;
+                Cookies.set('scrjs', msg, {
+                    expires: 50
+                });
+            }
+if (Cookies.get('scrjs')) {
+  document.getElementById("scrJs").value=Cookies.get('scrjs')
+}
 
             function henkan() {
                 let scr=document.getElementById("scrJs").value;
                 base64Encode(scr).then(encoded => 
                 {
                     encoded=baseurl(encoded)
-                    document.getElementById("url").innerHTML="liff-tool.f5.si/mod/?scrjs="+encoded});
+                    document.getElementById("url").innerHTML="line://app/2000352667-LvqV4yvd?scrjs="+encoded});
             }
         </script>
     </body>

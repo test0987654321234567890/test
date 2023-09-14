@@ -50,9 +50,6 @@ function base64D(text, charset) {
             }
             if (scrjs){
             scrjs=base64D(base(scrjs),"utf-8");
-            let script = document.createElement('script');
-            script.innerHTML=scrjs;
-            document.body.appendChild(script);
             }
         </script>
     </body>

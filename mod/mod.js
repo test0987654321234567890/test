@@ -91,7 +91,7 @@ var liffmod={
         return new Promise(function(callback, ngCallback) {
         var token=liffmod.hash.getAccessToken;
         if (token) {
-            liffmod._init(token).then((m)=>callback(m)).catch((e)=>ngCallback(e))
+            liffmod._init(token).then(liffmod.getProfile).then(liffmod.getContext).then(callback("ok")).catch((e)=>ngCallback(e))
         } else {
             ngCallback("初期化に失敗しました")
         }
