@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LIFF-Tool</title>
+        <link href="./style.css" rel="stylesheet">
+        <link rel="icon" href="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S"/>
+    </head>
+    <body>
+        <h1>LIFFツールv3.1</h1>
+        <h2>!!!!悪用厳禁!!!!</h2>
+        <p>
+            <span id="err"></span>
+        </p>
+        <h3>画像url生成</h3>
+<p><a href="line://nv/profile">アイコン画像を変換する画像にして</a>、変換を押してurlに変換できます。変換したurlはアイコンを再度変更しても変わりません。</p>
+<button type="button" onclick= img2url()>変換</button>
+<div id="img_url"><div>
+<h3>OCurl変換</h3>
+<p>url:<input type=text id=url><button type="button" onclick= OCurl()>変換</button></p><p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><p>参加リンク<br><span id="join"></span></p><p>招待リンク<br><span id="inv"></span></p><p>webデータ<br><span id="squ"></span></p><p>ticket<br><span id="tic"></span></p>
+
+        <br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+        <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+        <script>
+        liff.init({liffId:"",withLoginOnExternalBrowser:true});
+function img2url() {
+    liff.getProfile().then((res)=>{
+    if (res.pictureUrl){
+        document.getElementById("img_url").innerHTML=`<p>変換結果</p><img src="${res.pictureUrl}" alt="img"/><p>url: ${res.pictureUrl}</p>`
+    }
+})
+}           
+function OCurl() {
+    let url = document.getElementById("url").value;
+    let type = "不正なurlです";
+    var tic;
+    let urll = 0;
+    url = url.replace("line.me/ti/g2/", "line://ti/g2/");
+    url = url.replace("line.me/R/", "line://");
+    url = url.replace("https://", "");
+    urll = url.lastIndexOf("line://");
+    url = url.substr(urll);
+    if (url.substr(7, 6) == "ti/g2/") {
+        type = "招待リンク";
+        var s = url.substr(13);
+        tic = "";
+        for (var i = 0; i < s.length; ++i) {
+            if (s.charAt(i) == "?") {
+                break
+            } else {
+                tic = tic + s.charAt(i)
+            }
+        }
+    } else if (url.substr(7, 14) == "square/report?") {
+        type = "通報リンク";
+        tic = "";
+        var s = url.substr(21);
+        s = s.substr(s.lastIndexOf("ticket=") + 7);
+        s = s + "&";
+        s = s.substring(0, s.indexOf("&"));
+        tic = s;
+    } else if (url.substr(7, 12) == "square/join?") {
+        type = "参加リンク";
+        tic = "";
+        var s = url.substr(19);
+        s = s.substr(s.lastIndexOf("ticket=") + 7);
+        s = s + "&";
+        s = s.substring(0, s.indexOf("&"));
+        tic = s;
+    }
+    if (tic) {
+        document.getElementById("rep").innerHTML = "line://square/report?ticket=" + tic;
+        document.getElementById("join").innerHTML = "line://square/join?ticket=" + tic;
+        document.getElementById("inv").innerHTML = "https://line.me/ti/g2/" + tic;
+        document.getElementById("squ").innerHTML = "https://square-api.line.me/smw/v2/static/sm/html/#/squareCover/" + tic + "?isTicket=true";
+        document.getElementById("type").innerHTML = type;
+        document.getElementById("tic").innerHTML = tic;
+    } else {
+        document.getElementById("type").innerHTML = "不正なurlです";
+    }
+}
+        </script>
+    </body>
+</html>
