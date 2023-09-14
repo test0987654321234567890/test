@@ -42,6 +42,7 @@ if (Cookies.get('scrjs')) {
 }
 
             function henkan() {
+              setc();
                 let scr=document.getElementById("scrJs").value;
                 base64Encode(scr).then(encoded => 
                 {
