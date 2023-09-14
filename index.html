@@ -10,50 +10,19 @@
         <link rel="icon" href="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S"/>
     </head>
     <body>
-        <h1>LIFF-MOD</h1>
-        <span id="buttons"></span>
+        <h1>LIFFツールv3</h1>
+        <h2>!!!!悪用厳禁!!!!</h2>
+        <p>
+            <span id="err"></span>
+        </p>
+        <p>liff-token:<input type="text" id="token" value="null"><button type="button" onclick= set() >設定</button></p>
+        <button type="button" onclick=pc()>tokenを転送</button><button type="button" onclick=clos()>tokenを保持して閉じる(a)</button><button type="button" onclick=openB()>ブラウザで開く</button>
+        <p>
+            メッセージ送信:<input type=text id=test value="てすと"><button type="button" onclick=test()>送信</button>
+        </p>
+        <span id="button1"><button type="button" onclick=url()>通報リンク変換</button><button type="button" onclick=uni()>ユニコ自動連投</button><button type="button" onclick=flex()>Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button></span>
         <div id="app"></div><br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
-        <script src="./mod.js"></script>
-        <script id="modScript">
-                      function getParam(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-function base(base64url) {
-  let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/');
-  const padding = base64.length % 4;
-  if (padding > 0) {
-    return base64 + '===='.slice(padding);
-  } 
-  return base64;
-}
-function base64D(text, charset) {
-  fetch(`data:text/plain;charset=${charset};base64,` + text).then(response => response.text()).then(text=>{
-    let script = document.createElement('script');
-    script.innerHTML=text;
-    document.body.appendChild(script);
-  });
-}
-            let link=getParam("scrlink");
-            let scrjs=getParam("scrjs");
-            let scripthtml = document.getElementById('modScript');
-            if (link) {
-            let script = document.createElement('script');
-            script.src = link;
-            script.async = true;
-            document.body.appendChild(script);
-            }
-            if (scrjs){
-            scrjs=base64D(base(scrjs),"utf-8");
-            let script = document.createElement('script');
-            script.innerHTML=scrjs;
-            document.body.appendChild(script);
-            }
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+        <script src="./scr.js"></script>
     </body>
 </html>

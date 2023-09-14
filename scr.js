@@ -471,6 +471,7 @@ function seikei() {
     msg = JSON.parse(msg);
     msg = JSON.stringify(msg,null,2);
     document.getElementById("flexJson").value = msg;
+    document.getElementById("seikeierr").innerHTML = " ";
 } catch (error) {
     document.getElementById("seikeierr").innerHTML = error;
 }
