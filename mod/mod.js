@@ -2,17 +2,28 @@ var liffmod={
     accessToken:undefined,
     hash:{
         getAccessToken: function(){
-                var hashString = location.hash.substr(1);
-                if (hashString) {
-                    var hashAry = hashString.split('&');
-                    for (let i = 0; i < hashAry.length; ++i) {
-                        if (hashAry[i].substring(0, 12) == "access_token") {
-                            return hashAry[i].substr(13);
-                        }
+            var hashString = location.hash.substr(1);
+            if (hashString) {
+                var hashAry = hashString.split('&');
+                for (let i = 0; i < hashAry.length; ++i) {
+                    if (hashAry[i].substring(0, 12) == "access_token") {
+                        return hashAry[i].substr(13);
                     }
-                } else {
-                    return null
-        }},
+                }
+            } else {
+                return null
+    }},getContextToken: function(){
+        var hashString = location.hash.substr(1);
+        if (hashString) {
+            var hashAry = hashString.split('&');
+            for (let i = 0; i < hashAry.length; ++i) {
+                if (hashAry[i].substring(0, 13) == "context_token") {
+                    return hashAry[i].substr(14);
+                }
+            }
+        } else {
+            return null
+}},
     },
     token:{
         sendMessages:function (m, t) {
@@ -70,32 +81,11 @@ var liffmod={
       "method": "GET",
       "mode": "cors",
       "credentials": "include"
-    }).then()
-            })
-        },
-        getFriendship:function (t) {
-            return new Promise(function(callback,ngCallback) {
-                fetch("https://api.line.me/friendship/v1/status", {
-      "headers": {
-        "accept": "application/json",
-        "accept-language": "ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7",
-        "authorization": `Bearer ${t}`,
-        "cache-control": "no-cache",
-        "content-type": "application/json",
-        "pragma": "no-cache",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "cross-site",
-        "x-requested-with": "jp.naver.line.androie"
-      },
-      "referrer": "https://liff-playground.netlify.app/",
-      "referrerPolicy": "strict-origin-when-cross-origin",
-      "body": null,
-      "method": "GET",
-      "mode": "cors",
-      "credentials": "include"
-    });
-    })}
+    }).then((data)=>data.json()).then((res)=>{
+    callback(res)
+    }).catch(ngCallback("fetch error"))
+        })}
+        
     },
     init : function () {
         return new Promise(function(callback, ngCallback) {
@@ -188,9 +178,62 @@ var liffmod={
     })},
     getProfile:function () {
         return new Promise(function(callback,ngCallback) {
+            liffmod.token.getProfile(liffmod.accessToken).then((m)=>{profile=m;callback(m)}).catch((e)=>ngCallback(e))
         })
     },
-    getFriendship:function () {
+    getContext:function (conToken,t) {
         return new Promise(function(callback,ngCallback) {
-        })}
+            if (!conToken) {
+                conToken = liffmod.hash.getContextToken();
+            }if (!conToken) {
+                conToken = ".eyJlcnJvciI6IuODj-ODg-OCt-ODpeOBq2NvbnRleHRUb2tlbuOBjOWQq-OBvuOCjOOBpuOBhOOBvuOBm-OCkyJ9"
+            }
+
+        let conAry = conToken.split('.');
+        let text=_base(conAry[1]);
+        fetch(`data:text/plain;charset=utf-8;base64,` + text).then(response => response.text()).then(text=>{
+            if(!t){
+            liffmod.context=JSON.parse(text)}
+            callback(JSON.parse(text));
+        });})
+    },
+    context:null,
+    profile:null,
+    createURL:function () {
+        return new Promise(function(callback,ngCallback) {
+        let context=liffmod.context;
+        let cont={
+            liffId:context.liffId,
+            scope:context.scope,
+            userId:context.userId,
+            type:context.type,
+            squareMemberId:context.squareMemberId,
+        };
+        cont=JSON.stringify(cont);
+        cont=_base64Encode(cont);
+        cont.then((a)=>{
+        callback(location.origin+location.pathname+location.search+`#to=liff_mod&access_token=${liffmod.accessToken}&context_token=create.${a}`)
+        })})
+    }
+}
+function _base(base64url) {
+    let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/');
+    const padding = base64.length % 4;
+    if (padding > 0) {
+      return base64 + '===='.slice(padding);
+    } 
+    return base64;
+}
+function _base64Encode(...parts) {
+    return new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const offset = reader.result.indexOf(",") + 1;
+        resolve(reader.result.slice(offset));
+      };
+      reader.readAsDataURL(new Blob(parts));
+    });
+}
+function _baseurl(base64) {
+    return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=*$/g, '')
 }
