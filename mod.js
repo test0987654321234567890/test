@@ -58,7 +58,7 @@ var liffmod={
                     callback("ok")
                 }
             }
-            ).catch(ngCallback("fetch error"));
+            ).catch((e)=>ngCallback("fetch error: "+e));
         })},
         getProfile:function (t) {
             return new Promise(function(callback,ngCallback) {
@@ -80,18 +80,18 @@ var liffmod={
       "body": null,
       "method": "GET",
       "mode": "cors",
-      "credentials": "include"
+      "credentials": "omit"
     }).then((data)=>data.json()).then((res)=>{
     callback(res)
-    }).catch(ngCallback("fetch error"))
+    }).catch((e)=>ngCallback("fetch error: "+e))
         })}
         
     },
     init : function () {
         return new Promise(function(callback, ngCallback) {
-        var token=liffmod.hash.getAccessToken;
+        var token=liffmod.hash.getAccessToken();
         if (token) {
-            liffmod._init(token).then(liffmod.getProfile).then(liffmod.getContext).then(callback("ok")).catch((e)=>ngCallback(e))
+            liffmod._init(token).catch((e)=>{if (!liffmod.accessToken) {ngCallback("初期化に失敗しました : "+e)}}).then((o)=>liffmod.getContext()).then((p)=>liffmod.getProfile()).then((q)=>{if (liffmod.accessToken) {callback("init: ok")}})
         } else {
             ngCallback("初期化に失敗しました")
         }
@@ -125,10 +125,11 @@ var liffmod={
             }
             if (res.scope) {
                 liffmod.accessToken = t;
-                callback("Success")
+                console.log("Success");
+                callback("Success");
             }
         }
-        ).catch(ngCallback("fetch error"));
+        ).catch((e)=>ngCallback("fetch error: "+e));
     })
     },
     setAccessToken:function (t) {
@@ -138,7 +139,8 @@ var liffmod={
     },
     sendMessages:function (m){
         return new Promise(function(callback,ngCallback) {
-        liffmod.token.sendMessages(m,liffmod.token).then((c)=>callback(c)).catch((e)=>ngCallback(e))
+        let tok=liffmod.accessToken;
+        liffmod.token.sendMessages(m,tok).then((c)=>callback(c)).catch((e)=>ngCallback(e))
     })
     },
     isToken:function (t) {
@@ -178,7 +180,8 @@ var liffmod={
     })},
     getProfile:function () {
         return new Promise(function(callback,ngCallback) {
-            liffmod.token.getProfile(liffmod.accessToken).then((m)=>{profile=m;callback(m)}).catch((e)=>ngCallback(e))
+            let tok=liffmod.accessToken;
+            liffmod.token.getProfile(tok).then((m)=>{liffmod.profile=m;callback(m)}).catch((e)=>ngCallback(e))
         })
     },
     getContext:function (conToken,t) {

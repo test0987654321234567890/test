@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LIFF-mod</title>
+        <link href="./style.css" rel="stylesheet">
+        <link rel="icon" href="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S"/>
+    </head>
+    <body>
+        <h2>LIFF-mod Document</h2>
+        <p>Err : <br><span id="err"></span>
+        </p>
+        <h3>初期化・認証</h3>
+        <h4>liffmod.init()</h4>
+        <p>LIFFアプリを初期化します。このメソッドを実行すると、LIFF modの他のメソッドを実行できるようになります。</p>
+<pre>
+liffmod.init()
+  // liffIdは必要ありません
+.then(() => {
+  // Start to use liff's api
+})
+.catch((err) => {
+  // Error happens during initialization
+  console.log(err);
+})
+</pre>
+<h4>liffmod.setAccessToken(token)</h4>
+<p>AccessTokenを変更します。不正なtokenは設定できません。</p>
+<pre>
+liffmod.setAccessToken(token)
+.then(() => {
+  // Start to use liff's api
+})
+.catch((err) => {
+  // Error happens during initialization
+  console.log(err);
+})
+</pre>
+<h4>liffmod.isToken(token)</h4>
+<p>tokenが正しいtokenかを返します</p>
+<pre>
+liffmod.isToken(token)
+.then((res)=>{ //true or false
+    if (res){
+        console.log("ok")
+    }
+})
+</pre>
+<h3>情報の取得</h3>
+<h4>liffmod.context</h4>
+<p>liff.getContext()と同じ値を返します。liffmod.createURL()で生成したurlでは、liffId,scope,userId,type,squareMemberIdのみ利用可能です。</p>
+<pre>
+const context = liffmod.context;
+console.log(context);
+</pre>
+<h4>liffmod.getContext(token,isChange)</h4>
+<p>init前に取得する場合に使用します。contextTokenを指定してtokenから取得することもできます。tokenを設定した場合isChangeをtrueにするとliffmod.contextも変更できます。</p>
+<pre>
+liffmod.getContext()
+  .then((context) => {
+    console.log(context)
+  })
+  .catch((err) => {
+    console.log("error", err);
+  });
+</pre>
+<h4>liffmod.hash.getContextToken()</h4>
+<p>hashから取得したContextTokenを返します。</p>
+<pre>
+const context = liffmod.hash.getContextToken();
+console.log(context);
+</pre>
+<h4>liffmod.accessToken</h4>
+<p>liff.getAccessToken()と同じ値を返します。</p>
+<pre>
+const accessToken = liffmod.accessToken;
+console.log(accessToken);
+</pre>
+<h4>liffmod.hash.getAccessToken()</h4>
+<p>hashから取得したAccessTokenを返します。setAccessTokenで変更した場合は変更前のtokenになります。</p>
+<pre>
+const accessToken = liffmod.hash.getAccessToken();
+console.log(accessToken);
+</pre>
+<h4>liffmod.getProfile()</h4>
+<p>liff.getProfile()と同じ値を返します。</p>
+<pre>
+liffmod
+  .getProfile()
+  .then((profile) => {
+    const name = profile.displayName;
+    console.log(name)
+  })
+  .catch((err) => {
+    console.log("error", err);
+  });
+</pre>
+<h3>メッセージ送信</h3>
+<h4>liffmod.sendMessages(msg)</h4>
+<p>liff.sendMessages()と同じ挙動をします。</p>
+<pre>
+liffmod.sendMessages([
+    {
+      type: "text",
+      text: "Hello, World!",
+    },
+  ])
+  .then(() => {
+    console.log("message sent");
+  })
+  .catch((err) => {
+    console.log("error", err);
+  });
+</pre>
+<h3>パーマネントリンク</h3>
+<h4>liffmod.createURL()</h4>
+<p>開いているページのtoken付きurlを生成します。生成したurlは外部ブラウザ等からのメッセージ送信に使えます。</p>
+<pre>
+liffmod.createURL()
+  .then((url)=>open(url))
+</pre>
+        <br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
+        <script src="./mod.js"></script>
+        <script>
+            function htmlErr(p) {
+                document.getElementById("err").innerHTML=p
+            }
+            liffmod.init();
+            function sharelink() {
+              liffmod.createURL().then(
+                (url)=>{
+                  return encodeURIComponent(url)}
+              ).then((uri)=>{open("line://share?text="+uri)})
+            }
+        </script>
+    </body>
+</html>
