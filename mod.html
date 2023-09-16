@@ -13,6 +13,7 @@
         <h2>LIFF-mod Document</h2>
         <p>Err : <br><span id="err"></span>
         </p>
+        <p>src="https://liff-tool.f5.si/mod.js"</p>
         <h3>初期化・認証</h3>
         <h4>liffmod.init()</h4>
         <p>LIFFアプリを初期化します。このメソッドを実行すると、LIFF modの他のメソッドを実行できるようになります。</p>
@@ -86,7 +87,8 @@ const accessToken = liffmod.hash.getAccessToken();
 console.log(accessToken);
 </pre>
 <h4>liffmod.getProfile()</h4>
-<p>liff.getProfile()と同じ値を返します。</p>
+<p>liff.getProfile()と同じ値を返します。取得したプロフィールはliffmod.profileからも利用可能です。
+</p>
 <pre>
 liffmod
   .getProfile()
@@ -110,6 +112,37 @@ liffmod.sendMessages([
   ])
   .then(() => {
     console.log("message sent");
+  })
+  .catch((err) => {
+    console.log("error", err);
+  });
+</pre>
+<h3>token機能</h3>
+<h4>liffmod.token.sendMessages(msg,token)</h4>
+<p>tokenを指定してメッセージ送信ができます。</p>
+<pre>
+liffmod.token.sendMessages([
+    {
+      type: "text",
+      text: "Hello, World!",
+    },
+  ],token)
+  .then(() => {
+    console.log("message sent");
+  })
+  .catch((err) => {
+    console.log("error", err);
+  });
+</pre>
+<h4>liffmod.token.getProfile(token)</h4>
+<p>tokenからプロフィールが取得できます。
+</p>
+<pre>
+liffmod
+  .getProfile(token)
+  .then((profile) => {
+    const name = profile.displayName;
+    console.log(name)
   })
   .catch((err) => {
     console.log("error", err);
