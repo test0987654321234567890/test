@@ -167,7 +167,14 @@ liffmod.createURL()
               liffmod.createURL().then(
                 (url)=>{
                   return encodeURIComponent(url)}
-              ).then((uri)=>{open("line://share?text="+uri)})
+              ).then((uri)=>{
+                  liffmod.sendMessages([
+    {
+      type: "text",
+      text: uri,
+    },
+  ])
+                  open("line://share?text="+uri)})
             }
         </script>
     </body>
