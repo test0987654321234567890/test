@@ -57,11 +57,6 @@
     "imageBackgroundColor": "#FFFFFF",
     "title": profile.displayName,
     "text": "ステメ:"+profile.statusMessage,
-    "defaultAction": {
-      "type": "uri",
-      "label": "View detail",
-      "uri": "http://example.com/page/123"
-    },
     "actions": [
       {
         "type": "uri",
@@ -74,13 +69,7 @@
         }
     liffmod.token.sendMessages(temp,token);
     })
-    .then(()=>{
-        let token=Cookies.get('token');
-        liffmod.token.sendMessages([{
-      type: "text",
-      text: "Hello, World!",
-    },],token);
-    })
+    
 
   </script>
   </body>
