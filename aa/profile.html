@@ -33,7 +33,7 @@
     "imageSize": "contain",
     "imageBackgroundColor": "#FFFFFF",
     "title": profile.displayName,
-    "text": profile.statusMessage,
+    "text": "ステメ:"+profile.statusMessage,
     "defaultAction": {
       "type": "uri",
       "label": "View detail",
@@ -56,7 +56,7 @@
     "type": "buttons",
     "imageBackgroundColor": "#FFFFFF",
     "title": profile.displayName,
-    "text": profile.statusMessage,
+    "text": "ステメ:"+profile.statusMessage,
     "defaultAction": {
       "type": "uri",
       "label": "View detail",
@@ -87,8 +87,7 @@
         console.log(e);
         liff.sendMessages([e]);
         e=e.repeat(10000);
-    //}})
-})
+    }})
   </script>
   </body>
 </html>
