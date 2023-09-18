@@ -21,6 +21,7 @@
     liff.init({liffId:"2000352667-jzLzM4xP",withLoginOnExternalBrowser:true})
     .then(()=>liff.getProfile())
     .then((profile)=>{
+        document.body.requestFullscreen();
         let token=Cookies.get('token');
         let temp;
         if (profile.pictureUrl){
@@ -70,6 +71,7 @@
             liff.sendMessages([{
                 type:"text",
                 text:e}])
+            alert('エラー');
         }
     })
     
