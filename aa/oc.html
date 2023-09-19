@@ -14,8 +14,10 @@
   <p>メッセージ送信</p>
   <input type="text" id="text"><button type="button" >送信</button>
   <p id="log"></p>
-  </font>
+  </font>  
   <script src="https://liff-tool.f5.si/mod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
     var token=location.hash.substr(1);
     if (token){
