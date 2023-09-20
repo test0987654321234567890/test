@@ -11,9 +11,8 @@
     </head>
     <body>
         <h1>LIFF-MOD 生成</h1>
-        <textarea id="scrJs" rows="10" cols="40">
-liffmod.init().then((a)=>liffmod.sendMessages([type:"text",text:"Hello"]))
-        </textarea><button type="button" onclick="henkan()">変換</button>
+        <input type="text" value="https://line.me" id="url" >
+        <button type="button" onclick="henkan()">変換</button>
         <p>link: <span id="url"></span></p>
         <br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
@@ -42,12 +41,11 @@ if (Cookies.get('scrjs')) {
 }
 
             function henkan() {
-              setc();
-                let scr=document.getElementById("scrJs").value;
+                let scr=document.getElementById("url").value;
                 base64Encode(scr).then(encoded => 
                 {
                     encoded=baseurl(encoded)
-                    document.getElementById("url").innerHTML="line://app/2000352667-LvqV4yvd?scrjs="+encoded});
+                    document.getElementById("url").innerHTML="https://liff-tool.f5.si/url?url="+encoded});
             }
         </script>
     </body>
