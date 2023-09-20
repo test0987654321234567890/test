@@ -13,7 +13,7 @@
         <h1>回避url 生成</h1>
         <input type="text" value="https://line.me" id="url" >
         <button type="button" onclick="henkan()">変換</button>
-        <p>link: <span id="url"></span></p>
+        <p>link: <span id="res"></span></p>
         <br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
         <script>
@@ -36,7 +36,7 @@ function baseurl(base64) {
                 base64Encode(scr).then(encoded => 
                 {
                     encoded=baseurl(encoded)
-                    document.getElementById("url").innerHTML="https://liff-tool.f5.si/url?url="+encoded});
+                    document.getElementById("res").innerHTML="https://liff-tool.f5.si/url?url="+encoded});
             }
         </script>
     </body>
