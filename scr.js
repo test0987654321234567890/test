@@ -1,6 +1,9 @@
 var token, tk1, tk2, tk3, tk4, tk5;
 var apptype = 0;
 var tasiro = "";
+var kaiseki = `<p>解析するユニコ <input type="text" id="uni" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button></p>
+<p>結果：</p>
+<div id="res"></div>`;
 var tasiroUni = `<p><span id="err2"></span>　</p>
 <p><span id="to1"></span>token1:<input type="text" id="tok1" size="20" value="" oninput=isToken(1)></p>
 <p><span id="to2"></span>token2:<input type="text" id="tok2" size="20" value="" oninput=isToken(2)></p>
@@ -60,12 +63,12 @@ var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" o
 }}]
 </textarea><p><span id="seikeierr"></span></p><button type="button" onclick=flexSend(1) >送信</button><br>
 <section>
-<h1>画像url生成</h1>
+<h3>画像url生成</h3>
 <p><a href="line://nv/profile">アイコン画像を変換する画像にして</a>、変換を押してurlに変換できます。変換したurlはアイコンを再度変更しても変わりません。</p>
 <button type="button" onclick= img2url()>変換</button>
 <div id="img_url"><div>
 <br>
-<h1>投票箱</h1>
+<h3>投票箱</h3>
 <p>通知メッセージ<input type="text" id="Valt" size="20" value="[投票] "></p>
 <p>タイトル<input type="text" id="Vtitle" size="20" value="[投票] "></p>
 <p>説明文<input type="text" id="Vinfo" size="20" value="投票に参加してみましょう"></p>
@@ -76,7 +79,7 @@ var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" o
 <button type="button" onclick= Vout()>トークに送信</button><br><br>
 </section>
 <section>
-<h1>ライブトーク</h1>
+<h3>ライブトーク</h3>
 <p>通知メッセージ<input type="text" id="Lalt" size="20" value="ライブトークが始まりました"></p>
 <p>タイトル<input type="text" id="Ltitle" size="20" value="オープンチャット"></p>
 <p>説明文<input type="text" id="Linfo" size="20" value="ライブトークが始まりました。ライブに参加してみましょう。"></p>
@@ -86,7 +89,7 @@ var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" o
 <button type="button" onclick= Lout()>トークに送信</button><br><br>
 </section>
 <section>
-<h1>オープンチャット利用制限</h1>
+<h3>オープンチャット利用制限</h3>
 <p>通知メッセージ<input type="text" id="Oalt" size="20" value="オープンチャット利用制限：１日間"></p>
 <p>タイトル<input type="text" id="Otitle" size="20" value="オープンチャット利用制限：１日間"></p>
 <p>説明文<input type="text" id="Oinfo" size="20" value="運営への批判などが含まれたコンテンツをシェアした疑いがあるため、サービスの利用が制限されました。禁止事項に関する詳細は、以下のリンクをご確認ください。"></p>
@@ -96,7 +99,7 @@ var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" o
 <button type="button" onclick= Oout()>トークに送信</button><br><br>
 </section>
 <section>
-<h1>オープンチャット招待</h1>
+<h3>オープンチャット招待</h3>
 <p>通知メッセージ<input type="text" id="Ialt" size="20" value="オープンチャットに招待されました"></p>
 <p>タイトル<input type="text" id="Ititle" size="20" value="オープンチャット"></p>
 <p>説明文<input type="text" id="Iinfo" size="20" value="招待されました。"></p>
@@ -241,21 +244,21 @@ function test() {
 }
 function url() {
     saveApp();
-    button1.innerHTML = `<button type="button" onclick= url() id="RED" >通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex()>Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
+    button1.innerHTML = `<button type="button" onclick= kuni() >unicode解析</button><button type="button" onclick= url() id="RED" >通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex()>Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
     app.innerHTML = urlHenkan;
     apptype = 1;
     setApp();
 }
 function uni() {
     saveApp();
-    button1.innerHTML = `<button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni() id="RED">ユニコ自動連投</button><button type="button" onclick= flex()>Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
+    button1.innerHTML = `<button type="button" onclick= kuni() >unicode解析</button><button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni() id="RED">ユニコ自動連投</button><button type="button" onclick= flex()>Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
     app.innerHTML = unicode;
     apptype = 2;
     setApp();
 }
 function flex() {
     saveApp();
-    button1.innerHTML = `<button type="button" onclick= altuni()>flex-unicode</button><button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex() id="RED">Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
+    button1.innerHTML = `<button type="button" onclick= kuni() >unicode解析</button><button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex() id="RED">Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button><button type="button" onclick= altuni()>flex-unicode</button>`;
     app.innerHTML = flexTool;
     apptype = 3;
     setApp();
@@ -264,13 +267,20 @@ function help() {
     saveApp();
     app.innerHTML = helpHtml;
     apptype = 0;
-    button1.innerHTML = `<button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex()>Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help() id="RED" >使い方/ヘルプ</button>`;
+    button1.innerHTML = `<button type="button" onclick= kuni() >unicode解析</button><button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex()>Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help() id="RED" >使い方/ヘルプ</button>`;
 }
 function tUni() {
     saveApp();
-    button1.innerHTML = `<button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex() >Flexメッセージ生成</button><button type="button" onclick= tUni() id="RED">多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
+    button1.innerHTML = `<button type="button" onclick= kuni() >unicode解析</button><button type="button" onclick= url()>通報リンク変換</button><button type="button" onclick= uni()>ユニコ自動連投</button><button type="button" onclick= flex() >Flexメッセージ生成</button><button type="button" onclick= tUni() id="RED">多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
     app.innerHTML = tasiroUni;
     apptype = 4;
+    setApp();
+}
+function kuni() {
+    saveApp();
+    button1.innerHTML = `<button type="button" onclick= kuni() id="RED" >unicode解析</button><button type="button" onclick=url()>通報リンク変換</button><button type="button" onclick=uni()>ユニコ自動連投</button><button type="button" onclick=flex()>Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button>`;
+    app.innerHTML = kaiseki;
+    apptype = 5;
     setApp();
 }
 function altuni(){
@@ -896,4 +906,21 @@ function img2url() {
         document.getElementById("img_url").innerHTML=`<p>変換結果</p><img src="${res.pictureUrl}" alt="img"/><p>url: ${res.pictureUrl}</p>`
     }
 })
+}
+function uniK() {
+    let uni=document.getElementById("uni").value;
+    document.getElementById("res").innerHTML="";
+    uni = [...uni];
+    for (let i = 0; i < uni.length; i++) {
+        let u=uni[i];
+        if (!document.getElementById(u)){
+            document.getElementById("res").innerHTML=document.getElementById("res").innerHTML+`<p>ユニコ<input type="text" size="20" value="${u}">×数量<input type="number" id="${u}" size="20" value="0"></p>`
+        }
+    }
+    for (let i = 0; i < uni.length; i++) {
+        let u=uni[i];
+        if (document.getElementById(u)){
+            document.getElementById(u).value=parseInt(document.getElementById(u).value,10)+1;
+        }
+    }
 }
