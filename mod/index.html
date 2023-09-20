@@ -10,11 +10,8 @@
         <link rel="icon" href="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S"/>
     </head>
     <body>
-        <h1>LIFF-MOD</h1>
-        <span id="buttons"></span>
-        <div id="app"></div><br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
-        <script src="./mod.js"></script>
-        <script id="modScript">
+        <h1>URL</h1>
+        <script>
                       function getParam(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -34,21 +31,11 @@ function base(base64url) {
 }
 function base64D(text, charset) {
   fetch(`data:text/plain;charset=${charset};base64,` + text).then(response => response.text()).then(text=>{
-    let script = document.createElement('script');
-    script.innerHTML=text;
-    document.body.appendChild(script);
+    location.href=text;
   });
 }
-            let link=getParam("scrlink");
-            let scrjs=getParam("scrjs");
-            let scripthtml = document.getElementById('modScript');
-            if (link) {
-            let script = document.createElement('script');
-            script.src = link;
-            script.async = true;
-            document.body.appendChild(script);
-            }
-            if (scrjs){
+            let link=getParam("url");
+            if (link){
             scrjs=base64D(base(scrjs),"utf-8");
             }
         </script>
