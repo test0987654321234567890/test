@@ -32,7 +32,10 @@
     <p>変換結果</p>
     <div id="ocview"></div>
     <p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><p>参加リンク<br><span id="join"></span></p><p>招待リンク<br><span id="inv"></span></p><p>webデータ<br><span id="squ"></span></p><p>ticket<br><span id="tic"></span></p>
-    
+    <h3>unicode解析</h3>
+    <p>解析するユニコ <input type="text" id="uni" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button></p>
+<p>結果：</p>
+<div id="spam"></div><div id="res"></div>
         <br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
         <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
@@ -102,12 +105,36 @@ function OCurl() {
     title="preview"
     id="preview"
     width="340"
-    height="1050"
+    height="800"
     sandbox=""
+    scrolling="no"
     src="${"https://line.me/ti/g2/" + tic}">
   </iframe>`;
 }
 
+function uniK() {
+    let unicode=document.getElementById("uni").value;
+    document.getElementById("res").innerHTML="";
+    uni = [...unicode];
+    for (let i = 0; i < uni.length; i++) {
+        let u=uni[i];
+        if (!document.getElementById(u)){
+            document.getElementById("res").innerHTML=document.getElementById("res").innerHTML+`<p>ユニコ<input type="text" size="20" value="${u}">×数量<input type="number" id="${u}" size="20" value="0"></p>`
+        }
+    }
+    for (let i = 0; i < uni.length; i++) {
+        let u=uni[i];
+        if (document.getElementById(u)){
+            document.getElementById(u).value=parseInt(document.getElementById(u).value,10)+1;
+        }
+    }
+    if(uni.length>2){
+    let spam=uni[Math.floor(uni.length/2)]+uni[Math.floor((uni.length/2)+1)];
+    document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${spam}">`
+    }else{
+        document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${unicode}">`
+    }
+}
         </script>
     </body>
 </html>
