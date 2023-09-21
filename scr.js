@@ -478,8 +478,9 @@ function OCurl() {
     title="preview"
     id="preview"
     width="340"
-    height="1050"
+    height="800"
     sandbox=""
+    scrolling="no"
     src="${"https://line.me/ti/g2/" + tic}">
   </iframe>`;
 }
