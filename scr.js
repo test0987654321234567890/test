@@ -3,7 +3,7 @@ var apptype = 0;
 var tasiro = "";
 var kaiseki = `<p>解析するユニコ <input type="text" id="uni" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button></p>
 <p>結果：</p>
-<div id="res"></div>`;
+<div id="spam"></div><div id="res"></div>`;
 var tasiroUni = `<p><span id="err2"></span>　</p>
 <p><span id="to1"></span>token1:<input type="text" id="tok1" size="20" value="" oninput=isToken(1)></p>
 <p><span id="to2"></span>token2:<input type="text" id="tok2" size="20" value="" oninput=isToken(2)></p>
@@ -43,7 +43,18 @@ var helpHtml = `<h2>～各表示と機能の説明～</h2>
 <h2>～よくある質問～</h2>
 <h3>Q.liffアプリを利用するとmid(LINEが一意にユーザーに割り当てた識別子)を抜かれますか？</h3>
 <p>A.ありません。liffアプリはuid(サービス提供者ごとにLINEが一意にユーザーに割り当てた識別子)を取得できますが、midに変換することはできません。</p>`;
-var urlHenkan = `<p>url:<input type=text id=url><button type="button" onclick= OCurl()>変換</button></p><p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><p>参加リンク<br><span id="join"></span></p><p>招待リンク<br><span id="inv"></span></p><p>webデータ<br><span id="squ"></span></p><p>ticket<br><span id="tic"></span></p>`;
+var urlHenkan = `<p>url:<input type="url" id="url">
+<button type="button" onclick= OCurl()>変換</button></p>
+<p>変換する形式</p><select id="outtype">
+  <option value="line://">line://</option>
+  <option value="https://line.me/R/">https://line.me/R/</option>
+  <option value="https://line.me/S/">https://line.me/S/(LINEアプリからのみ利用可)</option>
+  <option value="https://line.naver.jp/R/">https://line.naver.jp/R/</option>
+  <option value="https://line.naver.jp/S/">https://line.naver.jp/S/(LINEアプリからのみ利用可)</option>
+</select>
+<p>変換結果</p>
+<div id="ocview"></div>
+<p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><p>参加リンク<br><span id="join"></span></p><p>招待リンク<br><span id="inv"></span></p><p>webデータ<br><span id="squ"></span></p><p>ticket<br><span id="tic"></span></p>`;
 var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" onblur="seikei()">
 [{"type": "flex","altText":"あいうえお","contents":{
     "type": "bubble",
@@ -415,8 +426,13 @@ function OCurl() {
     let type = "不正なurlです";
     var tic;
     let urll = 0;
+    let out=document.getElementById("outtype").value;
     url = url.replace("line.me/ti/g2/", "line://ti/g2/");
+    url = url.replace("line.me/S/", "line://");
     url = url.replace("line.me/R/", "line://");
+    url = url.replace("line.naver.jp/R/", "line://");
+    url = url.replace("line.naver.jp/S/", "line://");
+    url = url.replace("http://", "");
     url = url.replace("https://", "");
     urll = url.lastIndexOf("line://");
     url = url.substr(urll);
@@ -449,8 +465,8 @@ function OCurl() {
         tic = s;
     }
     if (tic) {
-        document.getElementById("rep").innerHTML = "line://square/report?ticket=" + tic;
-        document.getElementById("join").innerHTML = "line://square/join?ticket=" + tic;
+        document.getElementById("rep").innerHTML = out+"square/report?ticket=" + tic;
+        document.getElementById("join").innerHTML = out+"square/join?ticket=" + tic;
         document.getElementById("inv").innerHTML = "https://line.me/ti/g2/" + tic;
         document.getElementById("squ").innerHTML = "https://square-api.line.me/smw/v2/static/sm/html/#/squareCover/" + tic + "?isTicket=true";
         document.getElementById("type").innerHTML = type;
@@ -458,6 +474,14 @@ function OCurl() {
     } else {
         document.getElementById("type").innerHTML = "不正なurlです";
     }
+    document.getElementById("ocview").innerHTML = `<iframe
+    title="preview"
+    id="preview"
+    width="340"
+    height="1050"
+    sandbox=""
+    src="${"https://line.me/ti/g2/" + tic}">
+  </iframe>`;
 }
 function clip(type) {
     var txt;
@@ -908,9 +932,9 @@ function img2url() {
 })
 }
 function uniK() {
-    let uni=document.getElementById("uni").value;
+    let unicode=document.getElementById("uni").value;
     document.getElementById("res").innerHTML="";
-    uni = [...uni];
+    uni = [...unicode];
     for (let i = 0; i < uni.length; i++) {
         let u=uni[i];
         if (!document.getElementById(u)){
@@ -922,5 +946,11 @@ function uniK() {
         if (document.getElementById(u)){
             document.getElementById(u).value=parseInt(document.getElementById(u).value,10)+1;
         }
+    }
+    if(uni.length>2){
+    let spam=uni[Math.floor(uni.length/2)]+uni[Math.floor((uni.length/2)+1)];
+    document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${spam}">`
+    }else{
+        document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${unicode}">`
     }
 }
