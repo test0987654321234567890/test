@@ -17,26 +17,10 @@
         <br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
         <script>
-            function base64Encode(...parts) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const offset = reader.result.indexOf(",") + 1;
-      resolve(reader.result.slice(offset));
-    };
-    reader.readAsDataURL(new Blob(parts));
-  });
-}
-function baseurl(base64) {
-  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=*$/g, '')
-}
-
+            
             function henkan() {
                 let scr=document.getElementById("url").value;
-                base64Encode(scr).then(encoded => 
-                {
-                    encoded=baseurl(encoded)
-                    document.getElementById("res").innerHTML="https://liff-tool.f5.si/url?url="+encoded});
+ document.getElementById("res").innerHTML="https://liff-tool.f5.si/url?url="+encodeURIComponent(scr);
             }
         </script>
     </body>
