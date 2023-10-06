@@ -11,7 +11,7 @@
     </head>
     <body>
         <h1>回避url 生成</h1>
-        <input type="text" value="https://line.me" id="url" >
+        <textarea value="https://line.me" id="url" ></textarea>
         <button type="button" onclick="henkan()">変換</button>
         <p>link: <span id="res"></span></p>
         <br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
@@ -20,7 +20,7 @@
             
             function henkan() {
                 let scr=document.getElementById("url").value;
- document.getElementById("res").innerHTML="https://liff-tool.f5.si/url?url="+encodeURIComponent(scr);
+ document.getElementById("res").innerHTML="https://line.me/R/share?text="+encodeURIComponent(scr);
             }
         </script>
     </body>
