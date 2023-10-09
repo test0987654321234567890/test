@@ -1,7 +1,7 @@
 var token, tk1, tk2, tk3, tk4, tk5;
 var apptype = 0;
 var tasiro = "";
-var kaiseki = `<p>解析するユニコ <input type="text" id="uni" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button></p>
+var kaiseki = `<p>解析するユニコ <input type="text" id="uni" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button><br><button type="button" onclick=ame() >ameユニコ対策</button></p>
 <p>結果：</p>
 <div id="spam"></div><div id="res"></div>`;
 var tasiroUni = `<p><span id="err2"></span>　</p>
@@ -54,8 +54,8 @@ var urlHenkan = `<p>url:<input type="url" id="url">
 </select>
 <p>変換結果</p>
 <div id="ocview"></div>
-<p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><p>参加リンク<br><span id="join"></span></p><p>招待リンク<br><span id="inv"></span></p><p>webデータ<br><span id="squ"></span></p><p>ticket<br><span id="tic"></span></p>`;
-var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" onblur="seikei()">
+<p>urlの形式:<span id="type"></span></p><p>通報リンク<br><input type="text" id="rep" size="20" onclick={this.select();this.focus();}></p><p>参加リンク<br><input type="text" id="join" size="20" onclick={this.select();this.focus();}></p><p>招待リンク<br><input type="text" id="inv" size="20" onclick={this.select();this.focus();}></p><p>webデータ<br><input type="text" id="squ" size="20" onclick={this.select();this.focus();}></p><p>ticket<br><input type="text" id="tic" size="20" onclick={this.select();this.focus();}></p>`;
+var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" onblur="seikei()" >
 [{"type": "flex","altText":"あいうえお","contents":{
     "type": "bubble",
     "body": {
@@ -131,6 +131,7 @@ var unicode = `<p><input type="number" id="xxint" size="5" value="100">回<br><i
 <p>　　　　+</p>
 <p>後につける文字列<input type="text" id="2str" size="20" value="" oninput=check()></p>
 <div id="uniPad"></div>
+<p>「ブラウザで開く」を押して外部ブラウザで開けば重くなりません</p>
 </section>`;
 var button1 = document.getElementById('button1');
 var app = document.getElementById('app');
@@ -465,12 +466,12 @@ function OCurl() {
         tic = s;
     }
     if (tic) {
-        document.getElementById("rep").innerHTML = out+"square/report?ticket=" + tic;
-        document.getElementById("join").innerHTML = out+"square/join?ticket=" + tic;
-        document.getElementById("inv").innerHTML = "https://line.me/ti/g2/" + tic;
-        document.getElementById("squ").innerHTML = "https://square-api.line.me/smw/v2/static/sm/html/#/squareCover/" + tic + "?isTicket=true";
+        document.getElementById("rep").value = out+"square/report?ticket=" + tic;
+        document.getElementById("join").value = out+"square/join?ticket=" + tic;
+        document.getElementById("inv").value = "https://line.me/ti/g2/" + tic;
+        document.getElementById("squ").value = "https://square-api.line.me/smw/v2/static/sm/html/#/squareCover/" + tic + "?isTicket=true";
         document.getElementById("type").innerHTML = type;
-        document.getElementById("tic").innerHTML = tic;
+        document.getElementById("tic").value = tic;
     } else {
         document.getElementById("type").innerHTML = "不正なurlです";
     }
@@ -939,7 +940,7 @@ function uniK() {
     for (let i = 0; i < uni.length; i++) {
         let u=uni[i];
         if (!document.getElementById(u)){
-            document.getElementById("res").innerHTML=document.getElementById("res").innerHTML+`<p>ユニコ<input type="text" size="20" value="${u}">×数量<input type="number" id="${u}" size="20" value="0"></p>`
+            document.getElementById("res").innerHTML=document.getElementById("res").innerHTML+`<p>ユニコ<input type="text" size="20" value="${u}" onclick={this.select();this.focus();} >×数量<input type="number" id="${u}" size="20" value="0"></p>`
         }
     }
     for (let i = 0; i < uni.length; i++) {
@@ -950,8 +951,17 @@ function uniK() {
     }
     if(uni.length>2){
     let spam=uni[Math.floor(uni.length/2)]+uni[Math.floor((uni.length/2)+1)];
-    document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${spam}">`
+    document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${spam}" onclick={this.select();this.focus();} >`
     }else{
-        document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${unicode}">`
+        document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${unicode}" onclick={this.select();this.focus();} >`
     }
+}
+function ame() {
+    document.getElementById("res").innerHTML="";
+    document.getElementById("spam").innerHTML=`<p>フィルター用(ame)</p><input type="text" size="20" value="ٌٚ" onclick={this.select();this.focus();}><br><input type="text" size="20" value="ًۡ" onclick={this.select();this.focus();}>`
+}
+function sentaku(id) {
+    let input=document.getElementById(id);
+    input.select();
+    input.focus();
 }
