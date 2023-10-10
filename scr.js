@@ -936,21 +936,21 @@ function img2url() {
 function uniK() {
     let unicode=document.getElementById("uni").value;
     document.getElementById("res").innerHTML="";
-    uni = [...unicode];
-    for (let i = 0; i < uni.length; i++) {
-        let u=uni[i];
+    unico = [...unicode];
+    for (let i = 0; i < unico.length; i++) {
+        let u=unico[i];
         if (!document.getElementById(u)){
             document.getElementById("res").innerHTML=document.getElementById("res").innerHTML+`<p>ユニコ<input type="text" size="20" value="${u}" onclick={this.select();this.focus();} >×数量<input type="number" id="${u}" size="20" value="0"></p>`
         }
     }
-    for (let i = 0; i < uni.length; i++) {
-        let u=uni[i];
+    for (let i = 0; i < unico.length; i++) {
+        let u=unico[i];
         if (document.getElementById(u)){
             document.getElementById(u).value=parseInt(document.getElementById(u).value,10)+1;
         }
     }
-    if(uni.length>2){
-    let spam=uni[Math.floor(uni.length/2)]+uni[Math.floor((uni.length/2)+1)];
+    if(unico.length>2){
+    let spam=unico[Math.floor(unico.length/2)]+unico[Math.floor((unico.length/2)+1)];
     document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${spam}" onclick={this.select();this.focus();} >`
     }else{
         document.getElementById("spam").innerHTML=`<p>フィルター用<input type="text" size="20" value="${unicode}" onclick={this.select();this.focus();} >`
