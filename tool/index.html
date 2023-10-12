@@ -31,7 +31,7 @@
     </select>
     <p>変換結果</p>
     <div id="ocview"></div>
-    <p>urlの形式:<span id="type"></span></p><p>通報リンク<br><span id="rep"></span></p><p>参加リンク<br><span id="join"></span></p><p>招待リンク<br><span id="inv"></span></p><p>webデータ<br><span id="squ"></span></p><p>ticket<br><span id="tic"></span></p>
+    <p>urlの形式:<span id="type"></span></p><p>通報リンク<br><input type="text" id="rep" size="20" onclick={this.select();this.focus();}></p><p>参加リンク<br><input type="text" id="join" size="20" onclick={this.select();this.focus();}></p><p>招待リンク<br><input type="text" id="inv" size="20" onclick={this.select();this.focus();}></p><p>webデータ<br><input type="text" id="squ" size="20" onclick={this.select();this.focus();}></p><p>ticket<br><input type="text" id="tic" size="20" onclick={this.select();this.focus();}></p>
     <h3>unicode解析</h3>
     <p>解析するユニコ <input type="text" id="uni" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button></p>
 <p>結果：</p>
@@ -92,12 +92,12 @@ function OCurl() {
         tic = s;
     }
     if (tic) {
-        document.getElementById("rep").innerHTML = out+"square/report?ticket=" + tic;
-        document.getElementById("join").innerHTML = out+"square/join?ticket=" + tic;
-        document.getElementById("inv").innerHTML = "https://line.me/ti/g2/" + tic;
-        document.getElementById("squ").innerHTML = "https://square-api.line.me/smw/v2/static/sm/html/#/squareCover/" + tic + "?isTicket=true";
+        document.getElementById("rep").value = out+"square/report?ticket=" + tic;
+        document.getElementById("join").value = out+"square/join?ticket=" + tic;
+        document.getElementById("inv").value = "https://line.me/ti/g2/" + tic;
+        document.getElementById("squ").value = "https://square-api.line.me/smw/v2/static/sm/html/#/squareCover/" + tic + "?isTicket=true";
         document.getElementById("type").innerHTML = type;
-        document.getElementById("tic").innerHTML = tic;
+        document.getElementById("tic").value = tic;
     } else {
         document.getElementById("type").innerHTML = "不正なurlです";
     }
@@ -111,6 +111,7 @@ function OCurl() {
     src="${"https://line.me/ti/g2/" + tic}">
   </iframe>`;
 }
+
 
 function uniK() {
     let unicode=document.getElementById("uni").value;
