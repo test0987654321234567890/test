@@ -79,6 +79,14 @@ var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" o
 <button type="button" onclick= img2url()>変換</button>
 <div id="img_url"><div>
 <br>
+<section>
+<h3>あいさつメッセージ</h3>
+<p>通知メッセージ<input type="text" id="Balt" size="20" value="よろしくお願いします"></p>
+<p>あいさつ文<input type="text" id="Binfo" size="20" value="よろしくお願いします"></p>
+<p>ボタン名<input type="text" id="BbutName" size="20" value="大事なノートを見る"></p>
+<p>ボタンuri<input type="text" id="BbutUri" size="20" value="https://line.me"></p>
+<button type="button" onclick= Bout()>トークに送信</button><br><br>
+</section>
 <h3>投票箱</h3>
 <p>通知メッセージ<input type="text" id="Valt" size="20" value="[投票] "></p>
 <p>タイトル<input type="text" id="Vtitle" size="20" value="[投票] "></p>
@@ -331,7 +339,7 @@ function saveApp() {
         });
     } else if (apptype == 3) {
         var flexc=document.getElementById("flexJson").value;
-        Cookies.set("flexJson", flexc , {
+        Cookies.set("rawjson", flexc , {
             expires: 50
         });
     } else if (apptype == 4) {
@@ -392,8 +400,8 @@ function setApp() {
             document.getElementById("rate").value = Cookies.get("rate");
         }
     } else if (apptype == 3) {
-        if (Cookies.get("flexJson")) {
-            document.getElementById("flexJson").value = Cookies.get("flexJson");
+        if (Cookies.get("rawjson")) {
+            document.getElementById("flexJson").value = Cookies.get("rawjson");
         }
     } else if (apptype == 4) {
         if (Cookies.get("uni")) {
@@ -524,6 +532,16 @@ function flexSend(type) {
         send(msg);
     }
 }
+
+function Bout() {
+    var alt = document.getElementById("Balt").value;
+    var info = document.getElementById("Binfo").value;
+    var butName = document.getElementById("BbutName").value;
+    var butUri = document.getElementById("BbutUri").value;
+    document.getElementById("flexJson").value = `[{"type":"flex","altText":"${alt}","contents":{"type":"bubble","direction":"ltr","styles":{"header":{"separatorColor":"#ffffff"},"body":{"separator":false,"separatorColor":"#ffffff"},"footer":{"separator":false,"separatorColor":"#ffffff"}},"body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"${info}","size":"sm","color":"#000000","weight":"regular","style":"normal","decoration":"none","wrap":true,"margin":"none"}],"spacing":"sm","backgroundColor":"#ffffff","borderColor":"#ffffff","paddingTop":"11px","paddingBottom":"7px","paddingStart":"14px","paddingEnd":"14px"},"footer":{"type":"box","layout":"vertical","contents":[{"type":"box","layout":"vertical","contents":[{"type":"text","flex":1,"text":"${butName}","size":"xs","align":"center","gravity":"center","color":"#111111","weight":"bold","style":"normal","wrap":true,"position":"relative"}],"spacing":"11px","backgroundColor":"#f5f5f5","cornerRadius":"7px","height":"35px","action":{"type":"uri","label":"uri","uri":"${butUri}"}}],"spacing":"11px","position":"relative","paddingTop":"7px","paddingBottom":"14px","paddingStart":"14px","paddingEnd":"14px"},"size":"kilo","action":{"type":"uri","label":"uri","uri":"${butUri}"}}}]`
+    flexSend(1);
+}
+
 function Vout() {
     var alt = document.getElementById("Valt").value;
     var title = document.getElementById("Vtitle").value;
