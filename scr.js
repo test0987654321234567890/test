@@ -54,7 +54,7 @@ var urlHenkan = `<p>url:<input type="url" id="url" oninput=OCurl()>
 </select>
 <p>変換結果</p>
 <div id="ocview"></div>
-<p>urlの形式:<span id="type"></span></p><p>通報リンク<br><input type="text" id="rep" size="20" onclick={this.select();this.focus();clip(0);}></p><p>参加リンク<br><input type="text" id="join" size="20" onclick={this.select();this.focus();clip(1)}></p><p>招待リンク<br><input type="text" id="inv" size="20" onclick={this.select();this.focus();clip(2)}></p><p>webデータ<br><input type="text" id="squ" size="20" onclick={this.select();this.focus();}></p><p>ticket<br><input type="text" id="tic" size="20" onclick={this.select();this.focus();}></p>`;
+<p>urlの形式:<span id="type"></span></p><p>通報リンク<br><input type="text" id="rep" size="20" onclick={this.select();this.focus();document.execCommand("copy");}></p><p>参加リンク<br><input type="text" id="join" size="20" onclick={this.select();this.focus();document.execCommand("copy");}></p><p>招待リンク<br><input type="text" id="inv" size="20" onclick={this.select();this.focus();document.execCommand("copy");}></p><p>webデータ<br><input type="text" id="squ" size="20" onclick={this.select();this.focus();document.execCommand("copy");}></p><p>ticket<br><input type="text" id="tic" size="20" onclick={this.select();this.focus();document.execCommand("copy");}></p>`;
 var flexTool = `<p>json直打ち<p><textarea id="flexJson" rows="10" cols="40" onblur="seikei()" >
 [{"type": "flex","altText":"あいうえお","contents":{
     "type": "bubble",
