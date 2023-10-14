@@ -43,7 +43,7 @@ var helpHtml = `<h2>～各表示と機能の説明～</h2>
 <h2>～よくある質問～</h2>
 <h3>Q.liffアプリを利用するとmid(LINEが一意にユーザーに割り当てた識別子)を抜かれますか？</h3>
 <p>A.ありません。liffアプリはuid(サービス提供者ごとにLINEが一意にユーザーに割り当てた識別子)を取得できますが、midに変換することはできません。</p>`;
-var urlHenkan = `<p>url:<input type="url" id="url">
+var urlHenkan = `<p>url:<input type="url" id="url" oninput=OCurl()>
 <button type="button" onclick= OCurl()>変換</button></p>
 <p>変換する形式</p><select id="outtype">
   <option value="line://">line://</option>
@@ -495,10 +495,6 @@ function OCurl() {
 }
 function clip(type) {
     var txt;
-    if (!navigator.clipboard) {
-        alert("クリップボードに対応していません");
-        return;
-    }
     if (type == 0) {
         txt = document.getElementById("rep").innerHTML
     } else if (type == 1) {
