@@ -186,20 +186,14 @@
             if (navigator.userAgent.includes("LIFF")){
                 document.getElementById("name").innerHTML=""
             }
-            if (window.innerWidth<900) {
-                let scr=document.createElement("script");
-                scr.src="./scr-m.js";
-                document.body.appendChild(scr);
-            }else{
-                let scr=document.createElement("style");
-                scr.innerHTML=`div#main{
+            if (window.innerWidth>900){
+                let sty=document.createElement("style");
+                sty.innerHTML=`div#main{
                 margin: 30px;
             }`;
-                document.body.appendChild(scr);
-                scr=document.createElement("script");
-                scr.src="./scr-p.js";
-                document.body.appendChild(scr);
+                document.body.appendChild(sty)
             }
         </script>
+        <script src="scr-m.js"></script>
     </body>
 </html>

@@ -1,23 +1,4 @@
 document.getElementById("main").innerHTML=`
-<header id="header" class="header header_liff">
-            <h1 class="headh">LIFFツール</h1>
-            <nav >
-                <div class="table-wrap">
-                    <table class="table">
-                      <tr>
-                        <td><a class="heada" href="#toke">Token関係</a></td>
-                        <td><a class="heada" href="#unico">通常ユニコ連投</a></td>
-                        <td><a class="heada" href="#funi">Flexユニコ連投</a></td>
-                        <td><a class="heada" href="#unik">ユニコ解析</a></td>
-                        <td><a class="heada" href="#flexid">Flex送信</a></td>
-                        <td><a class="heada" href="#img_url">Flexテンプレート</a></td>
-                        <td><a class="heada" href="#ocurl">OCリンク変換</a></td>
-                        <td><a class="heada" href="#help">使い方・ヘルプ</a></td>
-                      </tr>
-                    </table>
-                  </div>
-            </nav>
-        </header>
         <header class="err" id="errbar">
             <span id="err"></span>
         </header>
@@ -46,6 +27,7 @@ document.getElementById("main").innerHTML=`
 <p>後につける文字列<input type="text" id="2str" size="20" value="" oninput=check()></p>
 <div id="uniPad"></div>
 <p >「ブラウザで開く」を押して外部ブラウザで開けば重くなりません</p>
+
 <br id="funi">
 <br>
 <h3>Flexユニコ連投</h3>
@@ -83,23 +65,25 @@ document.getElementById("main").innerHTML=`
 <p id="flex">結果：</p>
 <div id="spam"></div><div id="res"></div>
 <br id="flexid">
+<br>
 <h3>Flex送信</h3><textarea id="flexJson" rows="10" cols="40" onblur="seikei()" >
     </textarea><p><span id="seikeierr"></span></p><button type="button" onclick=flexSend(1) >送信</button><br>
-    <section>
+    
     <h3>画像url生成</h3>
     <p><a href="line://nv/profile">アイコン画像を変換する画像にして</a>、変換を押してurlに変換できます。変換したurlはアイコンを再度変更しても変わりません。</p>
     <button type="button" onclick= img2url()>変換</button>
     <div id="img_url"></div>
+    <br id="flex_temp">
     <br>
     <h3>テンプレート</h3>
-    <section>
+    
     <h3>あいさつメッセージ</h3>
     <p>通知メッセージ<input type="text" id="Balt" size="20" value="よろしくお願いします"></p>
     <p>あいさつ文<input type="text" id="Binfo" size="20" value="よろしくお願いします"></p>
     <p>ボタン名<input type="text" id="BbutName" size="20" value="大事なノートを見る"></p>
     <p>ボタンuri<input type="text" id="BbutUri" size="20" value="https://line.me"></p>
     <button type="button" onclick= Bout()>トークに送信</button><br><br>
-    </section>
+    
     <h3>投票箱</h3>
     <p>通知メッセージ<input type="text" id="Valt" size="20" value="[投票] "></p>
     <p>タイトル<input type="text" id="Vtitle" size="20" value="[投票] "></p>
@@ -109,8 +93,8 @@ document.getElementById("main").innerHTML=`
     <p>投票uri<input type="text" id="Vuri" size="20" value="https://line.me"></p>
     <p>画像url<input type="text" id="VimgUrl" size="20" value="https://scdn.line-apps.com/n/_1/poll/static/icon-message-1024.971665e3.png"></p>
     <button type="button" onclick= Vout()>トークに送信</button><br><br>
-    </section>
-    <section>
+    
+    
     <h3>ライブトーク</h3>
     <p>通知メッセージ<input type="text" id="Lalt" size="20" value="ライブトークが始まりました"></p>
     <p>タイトル<input type="text" id="Ltitle" size="20" value="オープンチャット"></p>
@@ -119,8 +103,8 @@ document.getElementById("main").innerHTML=`
     <p>ボタンuri<input type="text" id="LbutUri" size="20" value="https://line.me"></p>
     <p>オプ画像url<input type="text" id="LimgUrl" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
     <button type="button" onclick= Lout()>トークに送信</button><br><br>
-    </section>
-    <section>
+    
+    
     <h3>オープンチャット利用制限</h3>
     <p>通知メッセージ<input type="text" id="Oalt" size="20" value="オープンチャット利用制限：１日間"></p>
     <p>タイトル<input type="text" id="Otitle" size="20" value="オープンチャット利用制限：１日間"></p>
@@ -129,8 +113,8 @@ document.getElementById("main").innerHTML=`
     <p>ボタンuri<input type="text" id="ObutUri" size="20" value="https://line.me"></p>
     <p>サービスuri<input type="text" id="Ourl" size="20" value="https://line.me"></p>
     <button type="button" onclick= Oout()>トークに送信</button><br><br>
-    </section>
-    <section>
+    
+    
     <h3>オープンチャット招待</h3>
     <p>通知メッセージ<input type="text" id="Ialt" size="20" value="オープンチャットに招待されました"></p>
     <p>タイトル<input type="text" id="Ititle" size="20" value="オープンチャット"></p>
@@ -139,7 +123,7 @@ document.getElementById("main").innerHTML=`
     <p>ボタンuri<input type="text" id="IbutUri" size="20" value="https://line.me"></p>
     <p>オプ画像url<input type="text" id="IimgUrl" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
     <button type="button" onclick= Iout()>トークに送信</button><br><br id="url">
-    </section>
+    
     <br id="ocurl">
     <br>
     <h3>OCリンク変換</h3>
