@@ -5,6 +5,7 @@ document.getElementById("main").innerHTML=`
         <br id="toke">
         <br>
         <h3 >Token関係</h3>
+        <button type="button" onclick={document.documentElement.requestFullscreen();}>test</button>
         <p>
             liff-token:<input type="text" id="token" value="null"><button type="button" onclick=set()>設定</button>
         </p>
