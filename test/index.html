@@ -12,8 +12,12 @@
         <style id="style">
             body {
                 background-color: #222;
+                margin: 0px;
             }
 
+            div#main{
+                margin: 8px;
+            }
             body,a,a:visited {
                 color: #fff;
             }
@@ -100,9 +104,11 @@
                 padding: 5px 1% 0px;
                 position: fixed;
                 top: 0;
-                width: 100%;
                 background-color: #06c755;
-                
+    width: 100vw;
+    justify-content: space-between;
+    padding: 2px 15px;
+    align-items: center;
             }
             header.err {
                 padding: 0px 0% 0px;
@@ -144,15 +150,56 @@
                 border-collapse: collapse;
                 white-space: nowrap;
             }
+            h5.head5{
+                margin-block-start: 5px;
+                margin-block-end: 5px;
+            }
             td{
                 padding: 1px 10px;
             }
         </style>
+        <header id="header" class="header header_liff">
+            <span id="name"><h1 class="headh">LIFFツール</h1></span>
+            <nav >
+                <div class="table-wrap">
+                    <table class="table">
+                      <tr>
+                        <td><h5 class="head5"><a class="heada" href="#toke">Token関係</a></h5></td>
+                        <td><h5 class="head5"><a class="heada" href="#unico">通常ユニコ連投</a></h5></td>
+                        <td><h5 class="head5"><a class="heada" href="#funi">Flexユニコ連投</a></h5></td>
+                        <td><h5 class="head5"><a class="heada" href="#unik">ユニコ解析</a></h5></td>
+                        <td><h5 class="head5"><a class="heada" href="#flexid">Flex送信</a></h5></td>
+                        <td><h5 class="head5"><a class="heada" href="#flex_temp">Flexテンプレート</a></h5></td>
+                        <td><h5 class="head5"><a class="heada" href="#ocurl">OCリンク変換</a></h5></td>
+                        <td><h5 class="head5"><a class="heada" href="#help">使い方・ヘルプ</a></h5></td>
+                      </tr>
+                    </table>
+                  </div>
+            </nav>
+        </header>
         <div id="main" >
         <p>loading...</p>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
         <script src="./mod.js"></script>
-        <script src="./scr-m.js"></script>
+        <script>
+            if (navigator.userAgent.includes("LIFF")){
+                document.getElementById("name").innerHTML=""
+            }
+            if (window.innerWidth<900) {
+                let scr=document.createElement("script");
+                scr.src="./scr-m.js";
+                document.body.appendChild(scr);
+            }else{
+                let scr=document.createElement("style");
+                scr.innerHTML=`div#main{
+                margin: 30px;
+            }`;
+                document.body.appendChild(scr);
+                scr=document.createElement("script");
+                scr.src="./scr-p.js";
+                document.body.appendChild(scr);
+            }
+        </script>
     </body>
 </html>
