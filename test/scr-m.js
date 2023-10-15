@@ -150,11 +150,11 @@ document.getElementById("main").innerHTML=`
         <p>
             <a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a>
         </p>
-        <br><p>このサイトではis.gdの短縮URL apiを使用しています</p>
+        <br><p></p>
 `
 var errtimer;
 var errtimer_;
-liffmod.init().then()
+liffmod.init().then(()=>logbar("hello"))
 
 function err(msg) {
     let errbox=document.getElementById("err");
