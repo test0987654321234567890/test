@@ -1,30 +1,380 @@
 <!DOCTYPE html>
-<html lang="ja" style="color-scheme: light; --liff-base-background-color: black; --liff-base-text-color: #FFFFFF; --liff-base-background-rgb-color: 255, 255, 255; --liff-base-text-rgb-color: 0, 0, 0; --liff-light-button-border-color: rgba(0, 0, 0, 0.15); --liff-title-text-color: #111111; --liff-title-background-color: #FFFFFF; --liff-title-button-color: #FFFFFF; --liff-icon-color: #111111; --liff-status-bar-color: black; --liff-title-subtext-color: #B7B7B7; --liff-progress-bar-color: #FF0000; --liff-progress-background-color: #FFFFFF; --liff-title-button-area-background-color: rgba(255, 255, 255, 0.12); --liff-title-button-area-border-color: rgba(0, 0, 0, 0.15);">
+<html lang="ja">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="Cache-Control" content="no-cache">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>LIFF-APP</title>
-        <link href="./style.css" rel="stylesheet">
+        <title>LIFFツール</title>
         <link rel="icon" href="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S"/>
     </head>
     <body>
-        <h1>LIFFツールv3</h1>
-        <h2>!!!!悪用厳禁!!!!</h2>
-        <p>
-            <span id="err"></span>
-        </p>
-        <p>liff-token:<input type="text" id="token" value="null"><button type="button" onclick= set() >設定</button></p>
-        <button type="button" onclick=pc()>tokenを転送</button><button type="button" onclick=clos()>tokenを保持して閉じる(a)</button><button type="button" onclick=openB()>ブラウザで開く</button>
-        <p>
-            メッセージ送信:<input type=text id=test value="てすと"><button type="button" onclick=test()>送信</button>
-        </p>
-        <span id="button1"><button type="button" onclick= kuni() >unicode解析</button><button type="button" onclick=url()>通報リンク変換</button><button type="button" onclick=uni()>ユニコ自動連投</button><button type="button" onclick=flex()>Flexメッセージ生成</button><button type="button" onclick= tUni()>多機能連投</button><button type="button" onclick= help()>使い方/ヘルプ</button></span>
-        <div id="app"></div><br><br><p><a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a></p>
-        <p>その他のツール</p>
-        <p><a href="https://liff-tool.f5.si/url/create.html">規制url回避</a><br><a href="https://liff-tool.f5.si/tool">オプurl変換</a></p>
+        <style id="style">
+            body {
+                background-color: #222;
+                margin: 0px;
+            }
+
+            div#main{
+                margin: 8px;
+            }
+            body,a,a:visited {
+                color: #fff;
+            }
+
+            button {
+                padding: 4px 12px;
+                outline: none;
+                border-radius: 3px;
+                background-color: #06c755;
+                font-size: 12px;
+                line-height: 24px;
+                font-weight: 700;
+                color: #fff;
+                border: none;
+                margin: 2px;
+            }
+
+            .select {
+                padding: 4px 12px;
+                outline: none;
+                border-radius: 3px;
+                font-size: 12px;
+                line-height: 24px;
+                font-weight: 700;
+                margin: 2px;
+                color: #06c755;
+                background-color: #fff;
+                border: none;
+            }
+
+            .unicpad {
+                padding: 4px 12px;
+                outline: none;
+                border-radius: 3px;
+                font-size: 12px;
+                line-height: 24px;
+                font-weight: 700;
+                margin: 2px;
+                color: #000;
+                background-color: #fff;
+                border: none;
+            }
+
+            .cannot_use {
+                padding: 4px 12px;
+                outline: none;
+                border-radius: 3px;
+                font-size: 12px;
+                line-height: 24px;
+                font-weight: 700;
+                margin: 2px;
+                color: #fff;
+                background-color: #666;
+                border: none;
+            }
+
+            input,textarea,pre {
+                flex: 1 1 auto;
+                line-height: 30px;
+                padding: 0 4px 0 13px;
+                font-size: 16px;
+                font-weight: 400;
+                outline: none;
+                border: solid 1px #aaa;
+                border-radius: 5px;
+                margin: 0 5px;
+            }
+
+            iframe {
+                border: 1px solid black;
+                width: 100%;
+            }
+
+            select {
+                font-size: 0.9rem;
+                padding: 2px 5px;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            header.header {
+                padding: 5px 1% 0px;
+                position: fixed;
+                top: 0;
+                background-color: #06c755;
+    width: 100vw;
+    justify-content: space-between;
+    padding: 2px 15px;
+    align-items: center;
+            }
+            header.err {
+                padding: 0px 0% 0px;
+                margin: 65px 0px;
+                position: fixed;
+                top: 1;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0);
+                display: flex;
+                align-items: center;
+            }
+
+            h1.headh {
+                margin: 0;
+                padding: 0;
+                font-size: 20px;
+            }
+
+            a.heada {
+                text-decoration: none;
+                color: #fff;
+                font-size: 15px;
+            }
+            a.heada:hover {
+                text-decoration: underline;
+                color: #fff;
+                font-size: 15px;
+            }
+
+            nav {
+                margin: 0 0 0 0;
+            }
+            .scroll {
+                overflow-x: scroll;
+            }
+            .list {
+                width: 100%;
+                min-width: 800px;
+                display: flex;
+                list-style: none;
+                margin: 0;
+                padding-inline-start: 0px;
+            }
+            li {
+   margin: 0 0 0 25px;
+   font-size: 14px;
+}
+            h5.head5{
+                margin-block-start: 5px;
+                margin-block-end: 5px;
+            }
+            td{
+                padding: 1px 10px;
+            }
+        </style>
+        <div id="head">
+        <header id="header" class="header header_liff">
+            <span id="name"><h1 class="headh">LIFFツール</h1></span>
+            <nav >
+                <div class="scroll">
+                    <ul class="list">
+                        <li><h5 class="head5"><a class="heada" href="#toke">Token関係</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#unico">ユニコ連投</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#unik">ユニコ解析</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#flexid">Flex送信</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#flex_temp">Flexテンプレート</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#ocurl">OCリンク変換</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#help">使い方・ヘルプ</a></h5></li>
+                      </ul>
+                  </div>
+            </nav>
+        </header>
+    </div>
+        <div id="main" >
+            <header class="err" id="errbar">
+                <span id="err"></span>
+            </header>
+            <br id="toke">
+            <br>
+            <h3 >Token関係</h3>
+            <button type="button" onclick={document.documentElement.requestFullscreen();}>test</button>
+            <p>
+                liff-token:<input type="text" id="token" value="null"><button type="button" onclick=set()>設定</button>
+            </p>
+            <button type="button" onclick=pc()>tokenを転送</button><button type="button" onclick=clos()>tokenを保持して閉じる(a)</button><button type="button" onclick=openB()>ブラウザで開く</button>
+            <p>
+                メッセージ送信<input type=text id=test value="てすと"><button type="button" name="sendmsg" onclick=test()>送信</button>
+            </p>
+            <br id="unico">
+            <br>
+            <h3>ユニコ連投</h3>
+            <p>投下間隔:<input type="number" id="rate" size="5" value="700">ミリ秒</p>
+            <p>ユニコの形式</p>
+            <select id="unitype">
+              <option value="text">通常ユニコ</option>
+              <option value="flex">flexユニコ(OCでは５回以上連投でポリます)</option>
+              <option value="pre">プレビュー</option>
+            </select><br>
+    <span id="but"></span><button type="button" onclick=check2() >最大文字数</button><br>
+    <button type="button" onclick=sendMsg() >改行砲</button><button type="button" onclick=run2() name="sendmsg"  >ユニコ手動投下</button>
+    <p><span id="check"><br><br></span></p>
+    <span id="unipre"></span>
+    <p>前につける文字列<input type="text" id="1str" size="20" value="" oninput=check()></p>
+    <p>　　　　+</p>
+    <p>ユニコ<input type="text" id="uni" size="20" value="͢" oninput=check()><button type="button" onclick=uniPad() >ユニコ一覧</button></p>
+    <p>重ねる回数<input type="number" id="xint" size="5" value="10000" oninput=check()></p>
+    <p>　　　　+</p>
+    <p>後につける文字列<input type="text" id="2str" size="20" value="" oninput=check()></p>
+    <div id="uniPad"></div>
+    <p >「ブラウザで開く」を押して外部ブラウザで開けば重くなりません</p>
+    
+    <br id="unik"><br>
+    <h3>ユニコ解析</h3>
+    <p>解析するユニコ <input type="text" id="uni" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button></p>
+    <p id="flex">結果：</p>
+    <div id="spam"></div><div id="res"></div>
+    <br id="flexid">
+    <br>
+    <h3>Flex送信</h3><textarea id="flexJson" rows="10" cols="40" onblur="seikei()" >
+        </textarea><p><span id="seikeierr"></span></p><button type="button" onclick=flexSend(1) name="sendmsg"  >送信</button><br>
+        
+        <h3>画像url生成</h3>
+        <p><a href="line://nv/profile">アイコン画像を変換する画像にして</a>、変換を押してurlに変換できます。変換したurlはアイコンを再度変更しても変わりません。</p>
+        <button type="button" onclick= img2url()>変換</button>
+        <div id="img_url"></div>
+        <br id="flex_temp">
+        <br>
+        <h3>テンプレート</h3>
+        
+        <h3>あいさつメッセージ</h3>
+        <p>通知メッセージ<input type="text" id="Balt" size="20" value="よろしくお願いします"></p>
+        <p>あいさつ文<input type="text" id="Binfo" size="20" value="よろしくお願いします"></p>
+        <p>ボタン名<input type="text" id="BbutName" size="20" value="大事なノートを見る"></p>
+        <p>ボタンuri<input type="text" id="BbutUri" size="20" value="https://line.me"></p>
+        <button type="button" onclick= Bout() name="sendmsg" >トークに送信</button><br><br>
+        
+        <h3>投票箱</h3>
+        <p>通知メッセージ<input type="text" id="Valt" size="20" value="[投票] "></p>
+        <p>タイトル<input type="text" id="Vtitle" size="20" value="[投票] "></p>
+        <p>説明文<input type="text" id="Vinfo" size="20" value="投票に参加してみましょう"></p>
+        <p>ボタン名<input type="text" id="VbutName" size="20" value="投票する"></p>
+        <p>ボタンuri<input type="text" id="VbutUri" size="20" value="https://line.me"></p>
+        <p>投票uri<input type="text" id="Vuri" size="20" value="https://line.me"></p>
+        <p>画像url<input type="text" id="VimgUrl" size="20" value="https://scdn.line-apps.com/n/_1/poll/static/icon-message-1024.971665e3.png"></p>
+        <button type="button" onclick= Vout() name="sendmsg" >トークに送信</button><br><br>
+        
+        
+        <h3>ライブトーク</h3>
+        <p>通知メッセージ<input type="text" id="Lalt" size="20" value="ライブトークが始まりました"></p>
+        <p>タイトル<input type="text" id="Ltitle" size="20" value="オープンチャット"></p>
+        <p>説明文<input type="text" id="Linfo" size="20" value="ライブトークが始まりました。ライブに参加してみましょう。"></p>
+        <p>ボタン名<input type="text" id="LbutName" size="20" value="ライブトークに参加"></p>
+        <p>ボタンuri<input type="text" id="LbutUri" size="20" value="https://line.me"></p>
+        <p>オプ画像url<input type="text" id="LimgUrl" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
+        <button type="button" onclick= Lout() name="sendmsg" >トークに送信</button><br><br>
+        
+        
+        <h3>オープンチャット利用制限</h3>
+        <p>通知メッセージ<input type="text" id="Oalt" size="20" value="オープンチャット利用制限：１日間"></p>
+        <p>タイトル<input type="text" id="Otitle" size="20" value="オープンチャット利用制限：１日間"></p>
+        <p>説明文<input type="text" id="Oinfo" size="20" value="運営への批判などが含まれたコンテンツをシェアした疑いがあるため、サービスの利用が制限されました。禁止事項に関する詳細は、以下のリンクをご確認ください。"></p>
+        <p>ボタン名<input type="text" id="ObutName" size="20" value="安心・安全ガイドライン"></p>
+        <p>ボタンuri<input type="text" id="ObutUri" size="20" value="https://line.me"></p>
+        <p>サービスuri<input type="text" id="Ourl" size="20" value="https://line.me"></p>
+        <button type="button" onclick= Oout() name="sendmsg" >トークに送信</button><br><br>
+        
+        
+        <h3>オープンチャット招待</h3>
+        <p>通知メッセージ<input type="text" id="Ialt" size="20" value="オープンチャットに招待されました"></p>
+        <p>タイトル<input type="text" id="Ititle" size="20" value="オープンチャット"></p>
+        <p>説明文<input type="text" id="Iinfo" size="20" value="招待されました。"></p>
+        <p>ボタン名<input type="text" id="IbutName" size="20" value="参加する"></p>
+        <p>ボタンuri<input type="text" id="IbutUri" size="20" value="https://line.me"></p>
+        <p>オプ画像url<input type="text" id="IimgUrl" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
+        <button type="button" onclick= Iout() name="sendmsg" >トークに送信</button><br><br id="url">
+        
+        <br id="ocurl">
+        <br>
+        <h3>OCリンク変換</h3>
+        <p>url:<input type="url" id="url">
+            <button type="button" onclick= OCurl()>変換</button></p>
+            <p>変換する形式</p><select id="outtype">
+              <option value="line://">line://</option>
+              <option value="https://line.me/R/">https://line.me/R/</option>
+              <option value="https://line.me/S/">https://line.me/S/(LINEアプリからのみ利用可)</option>
+              <option value="https://line.naver.jp/R/">https://line.naver.jp/R/</option>
+              <option value="https://line.naver.jp/S/">https://line.naver.jp/S/(LINEアプリからのみ利用可)</option>
+            </select>
+            <p>変換結果</p>
+            <p>urlの形式:<span id="type"></span></p>
+            <p>通報リンク<br><input type="text" id="rep" size="20" onclick={this.select();this.focus();}></p>
+            <p>参加リンク<br><input type="text" id="join" size="20" onclick={this.select();this.focus();}></p>
+            <p>招待リンク<br><input type="text" id="inv" size="20" onclick={this.select();this.focus();}></p>
+            <p>webデータ<br><input type="text" id="squ" size="20" onclick={this.select();this.focus();}></p>
+            <p>ticket<br><input type="text" id="tic" size="20" onclick={this.select();this.focus();}></p>
+            <div id="ocview"></div>
+            <br id="help"><br>
+            <h3>ヘルプ</h3>
+            <p>
+                <a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a>
+            </p>
+            <br><p>このサイトではis.gdの短縮URL apiを使用しています</p>
+    </div>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-        <script src="./scr.js"></script>
+        <script src="./mod.js"></script>
+        <script>
+            if (navigator.userAgent.includes("LIFF")){
+                document.getElementById("name").innerHTML=""
+            }
+            if (window.innerWidth>900){
+                let sty=document.createElement("style");
+                sty.innerHTML=`div#main{
+                margin: 30px;
+            }`;
+                document.body.appendChild(sty)
+            }
+        </script>
+        <script>
+            var errtimer;
+            var errtimer_;
+            var can_msgsend;
+            liffmod.init().then(()=>{
+                liffmod.isToken(liffmod.accessToken).then((scope)=>{
+                    console.log(scope)
+                    scope.forEach(element => {
+                        if (element=="chat_message.write"){
+                            logbar("初期化に成功しました<br>メッセージを送信できます");
+                            can_msgsend=true
+                        }
+                    });
+                    if (!can_msgsend){
+                        nomsg()
+                }})
+            }).catch((e)=>{
+                if (getParam("t")){
+                    gett(getParam("t")).then((t)=>{
+                        liffmod.setAccessToken(t)
+                    }).catch((err)=>{
+                        nomsg()
+                    })
+                }else{
+                    nomsg()
+            }
+                
+            }).then(()=>{
+    if (!(location.protocol=="file:")){
+    //if (!Cookies.get("isAgree")) {
+    //    location.href = "./agree.html" + location.hash
+    //}
+    }
+            })
+
+
+            function pc() {
+                shortt(liffmod.accessToken).then((key)=>{
+    open("https://line.me/R/share?text="+encodeURIComponent("https://liff-tool.f5.si/?t="+key));})
+}
+function openB() {
+    shortt(liffmod.accessToken).then((key)=>{
+    open("https://liff-tool.f5.si/?t="+key);})
+}
+
+function clos() {
+    open("https://x.gd/8WPF7")
+}
+
+            </script>
     </body>
 </html>
