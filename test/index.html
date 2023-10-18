@@ -141,15 +141,21 @@
             nav {
                 margin: 0 0 0 0;
             }
-            .table-wrap {
+            .scroll {
                 overflow-x: scroll;
             }
-            .table {
+            .list {
                 width: 100%;
                 min-width: 800px;
-                border-collapse: collapse;
-                white-space: nowrap;
+                display: flex;
+                list-style: none;
+                margin: 0;
+                padding-inline-start: 0px;
             }
+            li {
+   margin: 0 0 0 25px;
+   font-size: 14px;
+}
             h5.head5{
                 margin-block-start: 5px;
                 margin-block-end: 5px;
@@ -162,18 +168,16 @@
         <header id="header" class="header header_liff">
             <span id="name"><h1 class="headh">LIFFツール</h1></span>
             <nav >
-                <div class="table-wrap">
-                    <table class="table">
-                      <tr>
-                        <td><h5 class="head5"><a class="heada" href="#toke">Token関係</a></h5></td>
-                        <td><h5 class="head5"><a class="heada" href="#unico">ユニコ連投</a></h5></td>
-                        <td><h5 class="head5"><a class="heada" href="#unik">ユニコ解析</a></h5></td>
-                        <td><h5 class="head5"><a class="heada" href="#flexid">Flex送信</a></h5></td>
-                        <td><h5 class="head5"><a class="heada" href="#flex_temp">Flexテンプレート</a></h5></td>
-                        <td><h5 class="head5"><a class="heada" href="#ocurl">OCリンク変換</a></h5></td>
-                        <td><h5 class="head5"><a class="heada" href="#help">使い方・ヘルプ</a></h5></td>
-                      </tr>
-                    </table>
+                <div class="scroll">
+                    <ul class="list">
+                        <li><h5 class="head5"><a class="heada" href="#toke">Token関係</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#unico">ユニコ連投</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#unik">ユニコ解析</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#flexid">Flex送信</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#flex_temp">Flexテンプレート</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#ocurl">OCリンク変換</a></h5></li>
+                        <li><h5 class="head5"><a class="heada" href="#help">使い方・ヘルプ</a></h5></li>
+                      </ul>
                   </div>
             </nav>
         </header>

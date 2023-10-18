@@ -15,11 +15,18 @@ document.getElementById("main").innerHTML=`
         </p>
         <br id="unico">
         <br>
-        <h3>通常ユニコ連投</h3>
-        <p><input type="number" id="xxint" size="5" value="100">回<br><input type="number" id="rate" size="5" value="700">ミリ秒<br></p>
+        <h3>ユニコ連投</h3>
+        <p>投下間隔:<input type="number" id="rate" size="5" value="700">ミリ秒</p>
+        <p>ユニコの形式</p>
+        <select id="unitype">
+          <option value="text">通常ユニコ</option>
+          <option value="flex">flexユニコ(OCでは５回以上連投でポリます)</option>
+          <option value="pre">プレビュー</option>
+        </select><br>
 <span id="but"></span><button type="button" onclick=check2() >最大文字数</button><br>
 <button type="button" onclick=sendMsg() >改行砲</button><button type="button" onclick=run2() >ユニコ手動投下</button>
 <p><span id="check"><br><br></span></p>
+<span id="unipre"></span>
 <p>前につける文字列<input type="text" id="1str" size="20" value="" oninput=check()></p>
 <p>　　　　+</p>
 <p>ユニコ<input type="text" id="uni" size="20" value="͢" oninput=check()><button type="button" onclick=uniPad() >ユニコ一覧</button></p>
@@ -29,37 +36,6 @@ document.getElementById("main").innerHTML=`
 <div id="uniPad"></div>
 <p >「ブラウザで開く」を押して外部ブラウザで開けば重くなりません</p>
 
-<br id="funi">
-<br>
-<h3>Flexユニコ連投</h3>
-            <p>
-                投下回数:<input type="number" id="xint" size="5" value="4">回
-            </p>
-            <p>5回以上連投するとポリます</p>
-            <p>
-                投下間隔:<input type="number" id="rate" size="5" value="700">ミリ秒
-            </p>
-            <span id="but">
-                <button type="button" onclick=run() >連投開始</button></button>
-            </span>
-            <p>
-                ユニコ:<input type=text id=uni value="ࣿ" oninput=check()>
-            <button type="button" onclick=uniPad()>ユニコ一覧</button></p>
-            <p>
-                重ねる数:<input type=number id=xuni value="16990" oninput=check()>
-            </p>
-            <p>
-                表示するテキスト:<input type=text id="txt" value="$◄████▌=≡≡" oninput=check()>
-            </p>
-            <p>※$の部分がユニコに置換されます</p>
-            <span id="col2">
-                <p style="background-color: #888;color: #000000;">表示する色:</p>
-            </span>
-            <input type=text id="col" value="000000" oninput="sample()">
-            <p>
-                通知用テキスト:<input type=text id="alt" value="This is a Flex Bomb">
-            </p>
-            <div id="uniPad"></div>
 <br id="unik"><br>
 <h3>ユニコ解析</h3>
 <p>解析するユニコ <input type="text" id="uni" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button></p>
@@ -150,11 +126,11 @@ document.getElementById("main").innerHTML=`
         <p>
             <a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a>
         </p>
-        <br><p></p>
+        <br><p>このサイトではis.gdの短縮URL apiを使用しています</p>
 `
 var errtimer;
 var errtimer_;
-liffmod.init().then(()=>logbar("hello"))
+liffmod.init().then()
 
 function err(msg) {
     let errbox=document.getElementById("err");
