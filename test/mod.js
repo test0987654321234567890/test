@@ -176,11 +176,10 @@ var liffmod={
                 callback(false)
             }
             if (res.scope) {
-                liffmod.accessToken = t;
-                callback(true)
+                callback(res.scope.split(" "))
             }
         }
-        ).catch(ngCallback("fetch error"));
+        );
         ;
     })},
     getProfile:function () {
@@ -244,4 +243,83 @@ function _base64Encode(...parts) {
 }
 function _baseurl(base64) {
     return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=*$/g, '')
+}
+            
+function shortt(t) {
+    return new Promise(function(callback,ngCallback) {
+    fetch("https://pilok1ng.pythonanywhere.com/api/short/?mode=set", {
+  "headers": {
+    "accept": "*/*",
+      "content-type": "application/json",
+  },
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "method": "POST",
+  "mode": "cors",
+    "body":`{"value":"${t}"}`,
+  "credentials": "omit"})
+      .then((data)=>data.json()).then((j)=>{callback(j.key)})
+})
+}
+function gett(k) {
+    return new Promise(function(callback,ngCallback) {
+    fetch("https://pilok1ng.pythonanywhere.com/api/short/?mode=get&get="+k, {
+  "headers": {
+    "accept": "*/*",
+      "content-type": "application/json",
+  },
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "method": "GET",
+  "mode": "cors",
+  "credentials": "omit"})
+      .then((data)=>data.json()).then((j)=>{callback(j.value)})
+})}
+function errbar(msg) {
+    let errbox=document.getElementById("err");
+    errbox.innerHTML=msg;
+    clearInterval(errtimer);
+    errtimer_=1000;
+    errtimer=setInterval(function(){
+        let bar=document.getElementById("errbar")
+        errtimer_=errtimer_-10;
+        bar.style=`background-color: rgba(255, 0, 0, ${errtimer_/1000});`
+        if (errtimer_==0){
+            clearInterval(errtimer);
+            document.getElementById("err").innerHTML=""
+        }
+    },40)
+}
+function logbar(msg) {
+    let errbox=document.getElementById("err");
+    errbox.innerHTML=msg;
+    clearInterval(errtimer);
+    errtimer_=1000;
+    errtimer=setInterval(function(){
+        let bar=document.getElementById("errbar")
+        errtimer_=errtimer_-10;
+        bar.style=`background-color: rgba(0, 0, 255, ${errtimer_/1000});`
+        if (errtimer_==0){
+            clearInterval(errtimer);
+            document.getElementById("err").innerHTML=""
+        }
+    },40)
+}
+
+function getParam(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function nomsg() {
+    errbar("初期化に失敗しました<br>メッセージの送信機能などが使用できません");
+                can_msgsend=false
+                m=document.getElementsByName("sendmsg")
+                for (let i = 0; i < m.length; i++) {
+                    let e = m[i];
+                    e.className="cannot_use"
+                    }
 }
