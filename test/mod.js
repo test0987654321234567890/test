@@ -142,10 +142,10 @@ var liffmod={
         let tok=liffmod.accessToken;
         liffmod.token.sendMessages(m,tok).then((c)=>callback(c)).catch((e)=>ngCallback(e))
     })
-    },sendTextMessages:function (m){
+    },sendTextMessage:function (m){
         return new Promise(function(callback,ngCallback) {
         let tok=liffmod.accessToken;
-        liffmod.token.sendMessages([],tok).then((c)=>callback(c)).catch((e)=>ngCallback(e))
+        liffmod.token.sendMessages([{type:"text",text:m}],tok).then((c)=>callback(c)).catch((e)=>ngCallback(e))
     })
     },
     isToken:function (t) {
@@ -322,4 +322,19 @@ function nomsg() {
                     let e = m[i];
                     e.className="cannot_use"
                     }
+}
+function yesmsg() {
+                can_msgsend=true
+                m=document.getElementsByName("sendmsg")
+                for (let i = 0; i < m.length; i++) {
+                    let e = m[i];
+                    e.className=""
+                    }
+}
+function cansend(func) {
+    if(can_msgsend){
+        func()
+    }else{
+        errbar("メッセージ送信機能を利用するにはtokenを設定してください");
+    }
 }

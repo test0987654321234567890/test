@@ -189,13 +189,12 @@
             <br id="toke">
             <br>
             <h3 >Token関係</h3>
-            <button type="button" onclick={document.documentElement.requestFullscreen();}>test</button>
             <p>
                 liff-token:<input type="text" id="token" value="null"><button type="button" onclick=set()>設定</button>
             </p>
             <button type="button" onclick=pc()>tokenを転送</button><button type="button" onclick=clos()>tokenを保持して閉じる(a)</button><button type="button" onclick=openB()>ブラウザで開く</button>
             <p>
-                メッセージ送信<input type=text id=test value="てすと"><button type="button" name="sendmsg" onclick=test()>送信</button>
+                メッセージ送信<input type=text id=test value="てすと"><button type="button" name="sendmsg" onclick=cansend(test)>送信</button>
             </p>
             <br id="unico">
             <br>
@@ -204,8 +203,8 @@
             <p>ユニコの形式</p>
             <select id="unitype">
               <option value="text">通常ユニコ</option>
-              <option value="flex">flexユニコ(OCでは５回以上連投でポリます)</option>
-              <option value="pre">プレビュー</option>
+              <option value="flex">flexユニコ(OCでは5回以上連投でポリます)</option>
+              <option value="pre">プレビュー(結果を表示します)</option>
             </select><br>
     <span id="but"></span><button type="button" onclick=check2() >最大文字数</button><br>
     <button type="button" onclick=sendMsg() >改行砲</button><button type="button" onclick=run2() name="sendmsg"  >ユニコ手動投下</button>
@@ -310,7 +309,6 @@
             <p>
                 <a href="https://line.me/R/oaMessage/@228jbgfo/">バグ報告・質問等はこちらへ</a>
             </p>
-            <br><p>このサイトではis.gdの短縮URL apiを使用しています</p>
     </div>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
         <script src="./mod.js"></script>
@@ -327,9 +325,7 @@
             }
         </script>
         <script>
-            var errtimer;
-            var errtimer_;
-            var can_msgsend;
+            var errtimer,errtimer_,can_msgsend,tokenkey;
             liffmod.init().then(()=>{
                 liffmod.isToken(liffmod.accessToken).then((scope)=>{
                     console.log(scope)
@@ -346,6 +342,9 @@
                 if (getParam("t")){
                     gett(getParam("t")).then((t)=>{
                         liffmod.setAccessToken(t)
+                    }).then(()=>{
+                        logbar("初期化に成功しました<br>メッセージを送信できます");
+                        can_msgsend=true
                     }).catch((err)=>{
                         nomsg()
                     })
@@ -359,20 +358,54 @@
     //    location.href = "./agree.html" + location.hash
     //}
     }
+            }).then(()=>{
+                document.getElementById('token').value = liffmod.accessToken;
             })
 
 
             function pc() {
+                if (!tokenkey){
                 shortt(liffmod.accessToken).then((key)=>{
-    open("https://line.me/R/share?text="+encodeURIComponent("https://liff-tool.f5.si/?t="+key));})
+                    tokenkey=key;
+    open("https://line.me/R/share?text="+encodeURIComponent("https://liff-tool.f5.si/?t="+key));})}
+                    else{
+                        open("https://line.me/R/share?text="+encodeURIComponent("https://liff-tool.f5.si/?t="+tokenkey))
+                    }
 }
 function openB() {
+    if(!tokenkey){
     shortt(liffmod.accessToken).then((key)=>{
-    open("https://liff-tool.f5.si/?t="+key);})
+        tokenkey=key;
+    open("https://liff-tool.f5.si/?t="+key);
+    })}
+    else{
+        open("https://liff-tool.f5.si/?t="+tokenkey);
+    }
 }
 
 function clos() {
     open("https://x.gd/8WPF7")
+}
+function test() {
+    let test = document.getElementById('test').value;
+    liffmod.sendTextMessage(test).then(()=>{logbar("送信しました")}).catch((e)=>{errbar("送信できませんでした: "+e)})
+}
+function set() {
+    liffmod.setAccessToken(document.getElementById('token').value).then(()=>{
+                liffmod.isToken(liffmod.accessToken).then((scope)=>{
+                    console.log(scope)
+                    scope.forEach(element => {
+                        if (element=="chat_message.write"){
+                            logbar("初期化に成功しました<br>メッセージを送信できます");
+                            yesmsg()
+                        }
+                    });
+                    if (!can_msgsend){
+                        nomsg()
+                }})
+            }).catch((e)=>{
+                nomsg()
+            })
 }
 
             </script>
