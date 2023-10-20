@@ -341,7 +341,7 @@
             }).catch((e)=>{
                 if (getParam("t")){
                     gett(getParam("t")).then((t)=>{
-                        liffmod.setAccessToken(t)
+                        return liffmod.setAccessToken(t);
                     }).then(()=>{
                         logbar("初期化に成功しました<br>メッセージを送信できます");
                         can_msgsend=true
@@ -352,12 +352,12 @@
                     nomsg()
             }
                 
-            }).then(()=>{
-    if (!(location.protocol=="file:")){
+    //        }).then(()=>{
+    //if (!(location.protocol=="file:")){
     //if (!Cookies.get("isAgree")) {
     //    location.href = "./agree.html" + location.hash
     //}
-    }
+    //}
             }).then(()=>{
                 document.getElementById('token').value = liffmod.accessToken;
             })
