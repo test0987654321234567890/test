@@ -82,6 +82,9 @@ var liffmod={
       "mode": "cors",
       "credentials": "omit"
     }).then((data)=>data.json()).then((res)=>{
+        if (res.message) {
+            ngCallback(res.message)
+        }
     callback(res)
     }).catch((e)=>ngCallback("fetch error: "+e))
         })}
@@ -285,6 +288,8 @@ function errbar(msg) {
         if (errtimer_==0){
             clearInterval(errtimer);
             document.getElementById("err").innerHTML=""
+        }if (errtimer_==200){
+            document.getElementById("err").innerHTML=""
         }
     },40)
 }
@@ -299,6 +304,9 @@ function logbar(msg) {
         bar.style=`background-color: rgba(0, 0, 255, ${errtimer_/1000});`
         if (errtimer_==0){
             clearInterval(errtimer);
+            document.getElementById("err").innerHTML=""
+        }
+        if (errtimer_==200){
             document.getElementById("err").innerHTML=""
         }
     },40)
@@ -337,4 +345,29 @@ function cansend(func) {
     }else{
         errbar("メッセージ送信機能を利用するにはtokenを設定してください");
     }
+}
+function loopSleep(_loopLimit, _interval, _mainFunc) {
+    var loopLimit = _loopLimit;
+    var interval = _interval;
+    var mainFunc = _mainFunc;
+    var i = 0;
+    var loopFunc = function() {
+        if (loop === false) {
+            // break機能
+            return;
+        }
+        mainFunc(i);
+        
+        i = i + 1;
+        if (i < loopLimit) {
+            setTimeout(loopFunc, interval);
+        }
+    }
+    loopFunc();
+}
+function clip(id) {
+    let input=document.getElementById(id)
+    input.select();
+    document.execCommand("copy");
+    logbar("コピーしました");
 }
