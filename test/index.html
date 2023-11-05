@@ -970,6 +970,7 @@ function addoclist(del) {
     if (del="load") {
         document.getElementById("ocframe").innerHTML=`<iframe src="./oclist.html"  style="min-height: 400px;" id="oclist"></iframe>`
         logbar("画面を読み込みました")
+        return
     }
     let url=document.getElementById("oclisturl").value;
     let octime=document.getElementById("octime").value;
