@@ -200,32 +200,33 @@
             <div class="waku">
             <h3 >Token関係</h3>
             <p>
-                liff-token:<input type="text" id="token" value=""><button type="button" onclick=set()>設定</button>
+                liff-token:<input name="save" type="text" id="token" value=""><button type="button" onclick=set()>設定</button>
             </p>
             <button type="button" onclick=pc()>tokenを転送</button><button type="button" onclick=clos()>tokenを保持して閉じる(a)</button><button type="button" onclick=openB()>ブラウザで開く</button>
             <p>
-                メッセージ送信<input type=text id=test value="てすと"><button type="button" name="sendmsg" onclick=cansend(test)>送信</button>
+                メッセージ送信<input name="save" type=text id=test value="てすと"><button type="button" name="sendmsg" onclick=cansend(test)>送信</button>
             </p>
             </div>
             <br id="unico">
             <br>
             <div class="waku">
             <h3>ユニコ連投</h3>
-            <p>投下間隔:<input type="number" id="rate" size="5" value="700">ミリ秒</p>
-            <p>投下回数:<input type="number" id="loop" size="5" value="700">回</p>
+            <p>投下間隔:<input name="save" type="number" id="rate" size="5" value="700">ミリ秒</p>
+            <p>投下回数:<input name="save" type="number" id="loop" size="5" value="700">回</p>
             <p>ユニコの形式</p>
             <select id="unitype" onchange=check()>
               <option value="text">通常ユニコ</option>
               <option value="flex">flexユニコ(OCでは5回以上連投でポリます)</option>
               <option value="pre">プレビュー(結果を表示します)</option>
+              <option value="share">共有砲</option>
             </select><br>
-    <span id="but"><button type="button" onclick=cansend(rununi) name="sendmsg" >連投開始</button></span><button type="button" onclick=check2() >最大文字数</button><button type="button" onclick=cansend(rununi2) name="sendmsg"  >ユニコ手動投下</button>
-    <p>前につける文字列<input type="text" id="1str" size="20" value="" oninput=check()></p>
+    <span id="but"><button id="rununi" type="button" onclick=cansend(rununi) name="sendmsg" >連投開始</button><button type="button" onclick=check2() >最大文字数</button><button id="rununi2" type="button" onclick=cansend(rununi2) name="sendmsg"  >ユニコ手動投下</button></span>
+    <p>前につける文字列<input name="save" type="text" id="1str" size="20" value="" oninput=check()></p>
     <p>　　　　+</p>
-    <p>ユニコ<input type="text" id="uni" size="20" value="͢" oninput=check()><button type="button" onclick=uniPad() >ユニコ一覧</button></p>
-    <p>重ねる回数<input type="number" id="xint" size="5" value="10000" oninput=check()></p>
+    <p>ユニコ<input name="save" type="text" id="uni" size="20" value="͢" oninput=check()><button type="button" onclick=uniPad() >ユニコ一覧</button></p>
+    <p>重ねる回数<input name="save" type="number" id="xint" size="5" value="10000" oninput=check()></p>
     <p>　　　　+</p>
-    <p>後につける文字列<input type="text" id="2str" size="20" value="" oninput=check()></p>
+    <p>後につける文字列<input name="save" type="text" id="2str" size="20" value="" oninput=check()></p>
     <div id="uniout"></div>
     <div id="uniPad"></div>
     <p >「ブラウザで開く」を押して外部ブラウザで開けば重くなりません</p>
@@ -233,7 +234,7 @@
     <br id="unik"><br>
     <div class="waku">
     <h3>ユニコ解析</h3>
-    <p>解析するユニコ <input type="text" id="unicode" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button></p>
+    <p>解析するユニコ <input name="save" type="text" id="unicode" size="20" value="" oninput=uniK()><button type="button" onclick=uniK() >解析</button></p>
     <p id="flex">結果：</p>
     <div id="spam"></div><div id="res"></div></div>
     <br id="flexid">
@@ -252,65 +253,65 @@
         <h3>Jsonテンプレート</h3>
         
         <h3>画像メッセージ</h3>
-        <p>プレビュー画像<input type="text" id="Gpre" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
-        <p>表示画像<input type="text" id="Gimg" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S"></p>
+        <p>プレビュー画像<input name="save" type="text" id="Gpre" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
+        <p>表示画像<input name="save" type="text" id="Gimg" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S"></p>
         <button type="button" onclick= cansend(Gout) name="sendmsg" >トークに送信</button><button type="button" onclick=Gout2()>jsonを出力</button></div><br><br>
         <div class="waku">
         <h3>あいさつメッセージ</h3>
-        <p>通知メッセージ<input type="text" id="Balt" size="20" value="よろしくお願いします"></p>
-        <p>あいさつ文<input type="text" id="Binfo" size="20" value="よろしくお願いします"></p>
-        <p>ボタン名<input type="text" id="BbutName" size="20" value="大事なノートを見る"></p>
-        <p>ボタンuri<input type="text" id="BbutUri" size="20" value="https://line.me"></p>
+        <p>通知メッセージ<input name="save" type="text" id="Balt" size="20" value="よろしくお願いします"></p>
+        <p>あいさつ文<input name="save" type="text" id="Binfo" size="20" value="よろしくお願いします"></p>
+        <p>ボタン名<input name="save" type="text" id="BbutName" size="20" value="大事なノートを見る"></p>
+        <p>ボタンuri<input name="save" type="text" id="BbutUri" size="20" value="https://line.me"></p>
         <button type="button" onclick= cansend(Bout) name="sendmsg" >トークに送信</button><button type="button" onclick=Bout2()>jsonを出力</button>
         </div><br><br>
         <div class="waku">
         <h3>投票箱</h3>
-        <p>通知メッセージ<input type="text" id="Valt" size="20" value="[投票] "></p>
-        <p>タイトル<input type="text" id="Vtitle" size="20" value="[投票] "></p>
-        <p>説明文<input type="text" id="Vinfo" size="20" value="投票に参加してみましょう"></p>
-        <p>ボタン名<input type="text" id="VbutName" size="20" value="投票する"></p>
-        <p>ボタンuri<input type="text" id="VbutUri" size="20" value="https://line.me"></p>
-        <p>投票uri<input type="text" id="Vuri" size="20" value="https://line.me"></p>
-        <p>画像url<input type="text" id="VimgUrl" size="20" value="https://scdn.line-apps.com/n/_1/poll/static/icon-message-1024.971665e3.png"></p>
+        <p>通知メッセージ<input name="save" type="text" id="Valt" size="20" value="[投票] "></p>
+        <p>タイトル<input name="save" type="text" id="Vtitle" size="20" value="[投票] "></p>
+        <p>説明文<input name="save" type="text" id="Vinfo" size="20" value="投票に参加してみましょう"></p>
+        <p>ボタン名<input name="save" type="text" id="VbutName" size="20" value="投票する"></p>
+        <p>ボタンuri<input name="save" type="text" id="VbutUri" size="20" value="https://line.me"></p>
+        <p>投票uri<input name="save" type="text" id="Vuri" size="20" value="https://line.me"></p>
+        <p>画像url<input name="save" type="text" id="VimgUrl" size="20" value="https://scdn.line-apps.com/n/_1/poll/static/icon-message-1024.971665e3.png"></p>
         <button type="button" onclick= cansend(Vout) name="sendmsg" >トークに送信</button><button type="button" onclick=Vout2()>jsonを出力</button>
         </div><br><br>
         
         <div class="waku">
         <h3>ライブトーク</h3>
-        <p>通知メッセージ<input type="text" id="Lalt" size="20" value="ライブトークが始まりました"></p>
-        <p>タイトル<input type="text" id="Ltitle" size="20" value="オープンチャット"></p>
-        <p>説明文<input type="text" id="Linfo" size="20" value="ライブトークが始まりました。ライブに参加してみましょう。"></p>
-        <p>ボタン名<input type="text" id="LbutName" size="20" value="ライブトークに参加"></p>
-        <p>ボタンuri<input type="text" id="LbutUri" size="20" value="https://line.me"></p>
-        <p>オプ画像url<input type="text" id="LimgUrl" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
+        <p>通知メッセージ<input name="save" type="text" id="Lalt" size="20" value="ライブトークが始まりました"></p>
+        <p>タイトル<input name="save" type="text" id="Ltitle" size="20" value="オープンチャット"></p>
+        <p>説明文<input name="save" type="text" id="Linfo" size="20" value="ライブトークが始まりました。ライブに参加してみましょう。"></p>
+        <p>ボタン名<input name="save" type="text" id="LbutName" size="20" value="ライブトークに参加"></p>
+        <p>ボタンuri<input name="save" type="text" id="LbutUri" size="20" value="https://line.me"></p>
+        <p>オプ画像url<input name="save" type="text" id="LimgUrl" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
         <button type="button" onclick= cansend(Lout) name="sendmsg" >トークに送信</button><button type="button" onclick=Lout2()>jsonを出力</button>
         </div><br><br>
         
         <div class="waku">
         <h3>オープンチャット利用制限</h3>
-        <p>通知メッセージ<input type="text" id="Oalt" size="20" value="オープンチャット利用制限：１日間"></p>
-        <p>タイトル<input type="text" id="Otitle" size="20" value="オープンチャット利用制限：１日間"></p>
-        <p>説明文<input type="text" id="Oinfo" size="20" value="運営への批判などが含まれたコンテンツをシェアした疑いがあるため、サービスの利用が制限されました。禁止事項に関する詳細は、以下のリンクをご確認ください。"></p>
-        <p>ボタン名<input type="text" id="ObutName" size="20" value="安心・安全ガイドライン"></p>
-        <p>ボタンuri<input type="text" id="ObutUri" size="20" value="https://line.me"></p>
-        <p>サービスuri<input type="text" id="Ourl" size="20" value="https://line.me"></p>
+        <p>通知メッセージ<input name="save" type="text" id="Oalt" size="20" value="オープンチャット利用制限：１日間"></p>
+        <p>タイトル<input name="save" type="text" id="Otitle" size="20" value="オープンチャット利用制限：１日間"></p>
+        <p>説明文<input name="save" type="text" id="Oinfo" size="20" value="運営への批判などが含まれたコンテンツをシェアした疑いがあるため、サービスの利用が制限されました。禁止事項に関する詳細は、以下のリンクをご確認ください。"></p>
+        <p>ボタン名<input name="save" type="text" id="ObutName" size="20" value="安心・安全ガイドライン"></p>
+        <p>ボタンuri<input name="save" type="text" id="ObutUri" size="20" value="https://line.me"></p>
+        <p>サービスuri<input name="save" type="text" id="Ourl" size="20" value="https://line.me"></p>
         <button type="button" onclick= cansend(Oout) name="sendmsg" >トークに送信</button><button type="button" onclick=Lout2()>jsonを出力</button>
         </div><br><br>
         
         <div class="waku">
         <h3>オープンチャット招待</h3>
-        <p>通知メッセージ<input type="text" id="Ialt" size="20" value="オープンチャットに招待されました"></p>
-        <p>タイトル<input type="text" id="Ititle" size="20" value="オープンチャット"></p>
-        <p>説明文<input type="text" id="Iinfo" size="20" value="招待されました。"></p>
-        <p>ボタン名<input type="text" id="IbutName" size="20" value="参加する"></p>
-        <p>ボタンuri<input type="text" id="IbutUri" size="20" value="https://line.me"></p>
-        <p>オプ画像url<input type="text" id="IimgUrl" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
+        <p>通知メッセージ<input name="save" type="text" id="Ialt" size="20" value="オープンチャットに招待されました"></p>
+        <p>タイトル<input name="save" type="text" id="Ititle" size="20" value="オープンチャット"></p>
+        <p>説明文<input name="save" type="text" id="Iinfo" size="20" value="招待されました。"></p>
+        <p>ボタン名<input name="save" type="text" id="IbutName" size="20" value="参加する"></p>
+        <p>ボタンuri<input name="save" type="text" id="IbutUri" size="20" value="https://line.me"></p>
+        <p>オプ画像url<input name="save" type="text" id="IimgUrl" size="20" value="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256"></p>
         <button type="button" onclick= cansend(Iout) name="sendmsg" >トークに送信</button><button type="button" onclick=Iout2()>jsonを出力</button>
         </div><br>
         <br id="ocurl">
         <br><div class="waku">
         <h3>OCリンク変換</h3>
-        <p>url:<input type="url" id="url">
+        <p>url:<input name="save" type="url" id="url">
             <button type="button" onclick= OCurl()>変換</button></p>
             <p>変換する形式</p><select id="outtype">
               <option value="line://">line://</option>
@@ -321,25 +322,25 @@
             </select>
             <p>変換結果</p>
             <p>urlの形式:<span id="type"></span></p>
-            <p>通報リンク<br><input type="text" id="rep" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("rep")' >コピー</button></p>
-            <p>参加リンク<br><input type="text" id="join" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("join")' >コピー</button></p>
-            <p>招待リンク<br><input type="text" id="inv" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("inv")' >コピー</button></p>
-            <p>webデータ<br><input type="text" id="squ" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("squ")' >コピー</button></p>
-            <p>ticket<br><input type="text" id="tic" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("tic")' >コピー</button></p>
+            <p>通報リンク<br><input name="save" type="text" id="rep" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("rep")' >コピー</button></p>
+            <p>参加リンク<br><input name="save" type="text" id="join" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("join")' >コピー</button></p>
+            <p>招待リンク<br><input name="save" type="text" id="inv" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("inv")' >コピー</button></p>
+            <p>webデータ<br><input name="save" type="text" id="squ" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("squ")' >コピー</button></p>
+            <p>ticket<br><input name="save" type="text" id="tic" size="20" onclick={this.select();this.focus();}><button type="button" onclick='clip("tic")' >コピー</button></p>
             <div id="ocview"></div>
             </div>
             <br id="mylis"><br>
             <div class="waku">
                 <h3>MyList偽造</h3>
                 <p>OCのMyListを生成します</p>
-                <p>url:<input id="oclisturl" type="url"></p>
-                <p>最終更新表示:<input id="octime" type="text" value="たった今"></p>
+                <p>url:<input name="save" id="oclisturl" type="url"></p>
+                <p>最終更新表示:<input name="save" id="octime" type="text" value="たった今"></p>
                 <select id="memtype">
                     <option value="">メンバー</option>
                     <option value="suboperator">副官</option>
                     <option value="operator">管理者</option>
                   </select>
-                <button type="button" onclick='addoclist()'>追加</button><button type="button" onclick='addoclist("del")'>全削除</button>
+                <button type="button" onclick='addoclist()'>追加</button><button type="button" onclick='addoclist("1del")'>1件削除</button><button type="button" onclick='addoclist("del")'>全削除</button>
                 <div id="ocframe"><iframe src="./oclist.html"  id="oclist"></iframe></div>
                 <button type="button" onclick='document.getElementById("ocframe").requestFullscreen()'>拡大</button>
             </div>
@@ -347,10 +348,10 @@
             <div class="waku">
                 <h3>IP特定画像生成</h3>
                 <p>flexや画像メッセージの画像urlとして送ると相手のipを取得して現在のトークに送信するurlを生成します</p>
-                <p>元画像url:<input id="ipurl" type="url"></p>
-                <p>通知コード:<input id="ipcode" type="text" value="ip抜き"></p>
+                <p>元画像url:<input name="save" id="ipurl" type="url"></p>
+                <p>通知コード:<input name="save" id="ipcode" type="text" value="ip抜き"></p>
                 <button type="button" name="sendmsg" onclick='cansend(ip)'>生成</button>
-                <p><input type="text" id="ipout"></p>
+                <p><input name="save" type="text" id="ipout"><button type="button" onclick='clip("ipout")' >コピー</button></p>
             </div>
             <br id="logs"><br>
             <div class="waku">
@@ -386,8 +387,8 @@ function ip() {
     let code=document.getElementById("ipcode").value;
     document.getElementById("ipout").value=`https://pilok1ng.pythonanywhere.com/api/img?mode=ip&token=${liffmod.accessToken}&code=${encodeURIComponent(code)}&url=${encodeURIComponent(url)}`
 }
-
-
+document.documentElement.addEventListener("click",save)
+load();
             var errtimer,errtimer_,can_msgsend,tokenkey,loop;
             var logs=[];
             liffmod.init().then(()=>{
@@ -433,7 +434,7 @@ function ip() {
                 if (!tokenkey){
                 shortt(liffmod.accessToken).then((key)=>{
                     tokenkey=key;
-    open("https://line.me/R/share?text="+encodeURIComponent("https://liff-tool.f5.si/?t="+key));})}
+    open("https://line.me/R/share?text="+encodeURIComponent("https://liff-tool.f5.si/test/?t="+key));})}
                     else{
                         open("https://line.me/R/share?text="+encodeURIComponent("https://liff-tool.f5.si/test/?t="+tokenkey))
                     }
@@ -442,7 +443,7 @@ function openB() {
     if(!tokenkey){
     shortt(liffmod.accessToken).then((key)=>{
         tokenkey=key;
-    open("https://liff-tool.f5.si/?t="+key);
+    open("https://liff-tool.f5.si/test/?t="+key);
     })}
     else{
         open("https://liff-tool.f5.si/test/?t="+tokenkey);
@@ -547,6 +548,7 @@ function rununi() {
     let x = document.getElementById("xint").value;
     let xx = document.getElementById("loop").value;
     let rate = document.getElementById("rate").value;
+    var msgj;
     if (xx == 0) {
         document.getElementById("xxint").value = 1;
         document.getElementById('but').innerHTML = "<button type=\"button\" onclick=rununi() >連投開始</button>";
@@ -555,7 +557,7 @@ function rununi() {
     msg = msg.repeat(x);
     msg = bef + msg + aft;
     if (document.getElementById("unitype").value=="flex"){
-        msg={
+        msgj={
                     "type": "flex",
                     "altText": bef+aft,
                     "contents": {
@@ -577,20 +579,30 @@ function rununi() {
                     }
                 };
     }else{
-        msg={type:"text",text:msg}
+        msgj={type:"text",text:msg}
     }
-    loop=true;
-    loopSleep(xx, rate, function(i) {
-        sendUni(msg);
-        document.getElementById('loop').value = xx - i - 1;
-    });
-    function sendUni(msg) {
-        liffmod.sendMessages([msg,msg,msg,msg,msg]).then(()=>{
+    
+    if (document.getElementById("unitype").value!="share"&&document.getElementById("unitype").value!="sharev2") {
+        function sendUni(msgj) {
+        liffmod.sendMessages([msgj,msgj,msgj,msgj,msgj]).then(()=>{
             logbar("送信しました")
         }).catch((err)=>{
             errbar("送信できませんでした: "+err)
         })
     }
+    loop=true;
+    loopSleep(xx, rate, function(i) {
+        sendUni(msgj);
+        document.getElementById('loop').value = xx - i - 1;
+    });
+    } else {
+        if (document.getElementById("unitype").value=="share") {
+            loopSleep(xx, rate, function(i) {
+        location.href="line://msg/text/"+msg;
+        document.getElementById('loop').value = xx - i - 1;
+    });
+}}
+    
 }else{
     errbar("エラー")
 }
@@ -610,7 +622,7 @@ function rununi2() {
     msg = msg.repeat(x);
     msg = bef + msg + aft;
     if (document.getElementById("unitype").value=="flex"){
-        msg={
+        msgj={
                     "type": "flex",
                     "altText": bef+aft,
                     "contents": {
@@ -632,18 +644,39 @@ function rununi2() {
                     }
                 };
     }else{
-        msg={type:"text",text:msg}
+        msgj={type:"text",text:msg}
     }
-        liffmod.sendMessages([msg]).then(()=>{
+    if (document.getElementById("unitype").value!="share"&&document.getElementById("unitype").value!="sharev2") {
+        liffmod.sendMessages([msgj]).then(()=>{
             logbar("送信しました")
         }).catch((err)=>{
             errbar("送信できませんでした: "+err)
         })
+    } else {
+        if (document.getElementById("unitype").value=="share") {
+        location.href="line://msg/text/"+msg;
+}}
 }else{
     errbar("エラー")
 }
 }
-
+function save() {
+    let inputs=document.getElementsByName("save")
+    var save=[]
+    inputs.forEach(e => {
+        if (e.id) {
+            save.push({v:e.value,id:e.id})   
+        }
+    });
+    localStorage.setItem("save",JSON.stringify(save))
+}
+function load() {
+    let inputs=document.getElementsByName("save")
+    var save=JSON.parse(localStorage.getItem("save"))
+    save.forEach(e => {
+        document.getElementById(e.id).value=e.v
+    });
+}
 function uniPad() {
     let unico = ["꙰⃟","ܑ", "ܰ", "ܱ", "ܲ", "ܳ", "ܴ", "ܵ", "ܶ", "ܷ", "ܸ", "ܹ", "ܺ", "ܻ", "ܼ", "ܽ", "ܾ", "ܿ", "݀", "݁", "݂", "݃", "݄", "݅", "݆", "݇", "݈", "݉", "݊", "ૺ", "ૻ", "ૼ", "ੈ", "଼", "ิ", "ุ", "ฺ", "้", "ີ", "ⷣ", "ⷵ", "ⷨ", "֦", "֘"];
     let uniP = document.getElementById("uniPad");
@@ -696,6 +729,11 @@ function check() {
         document.getElementById("uniout").innerHTML=`結果<input value="${msg}" type="text" size="20" id="uni_out" onclick={this.select();this.focus();} ><button type="button" onclick=clip("uni_out") >コピー</button>`
     }else{
         document.getElementById("uniout").innerHTML=""
+    }
+    if (document.getElementById("unitype").value=="share"){
+        document.getElementById("but").innerHTML=`<button id="rununi" type="button" onclick=rununi() name="sendmsg" >連投開始</button><button type="button" onclick=check2() >最大文字数</button><button id="rununi2" type="button" onclick=rununi2() name="sendmsg"  >ユニコ手動投下</button>`
+    }else{
+        document.getElementById("but").innerHTML=`<button id="rununi" type="button" onclick=cansend(rununi) name="sendmsg" >連投開始</button><button type="button" onclick=check2() >最大文字数</button><button id="rununi2" type="button" onclick=cansend(rununi2) name="sendmsg"  >ユニコ手動投下</button>`
     }
 }
 
@@ -922,6 +960,11 @@ function Cout2() {
 function addoclist(del) {
     if (del=="del") {
         document.getElementById("oclist").contentWindow.document.getElementById("squarelists").innerHTML=""
+        return
+    }
+    if (del=="1del") {
+        let lists=document.getElementById("oclist").contentWindow.document.querySelectorAll("#squarelists > li")
+        lists[lists.length-1].remove()
         return
     }
     let url=document.getElementById("oclisturl").value;

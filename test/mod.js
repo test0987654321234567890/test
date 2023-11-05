@@ -300,7 +300,6 @@ function errbar(msg) {
 function logbar(msg) {
     let errbox=document.getElementById("err");
     errbox.innerHTML=msg;
-    logs.push(("[L] "+msg));
     let view=document.getElementById("logview");
     view.value+="[L] "+msg.replace("<br>","\n")+"\n"
     clearInterval(errtimer);
