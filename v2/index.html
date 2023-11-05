@@ -541,7 +541,7 @@ function OCurl() {
 
 function rununi() {
     if (document.getElementById("unitype").value!="pre"){
-    document.getElementById('but').innerHTML = "<button type=\"button\" onclick=stop()>連投停止</button>";
+    document.getElementById('but').innerHTML = `<button id="rununi" type="button" onclick=stop() name="sendmsg" >連投停止</button><button type="button" onclick=check2() >最大文字数</button><button id="rununi2" type="button" onclick=cansend(rununi2) name="sendmsg"  >ユニコ手動投下</button>`;
     let msg = document.getElementById("uni").value;
     let bef = document.getElementById("1str").value;
     let aft = document.getElementById("2str").value;
@@ -551,7 +551,7 @@ function rununi() {
     var msgj;
     if (xx == 0) {
         document.getElementById("xxint").value = 1;
-        document.getElementById('but').innerHTML = "<button type=\"button\" onclick=rununi() >連投開始</button>";
+        document.getElementById('but').innerHTML = `<button id="rununi" type="button" onclick=cansend(rununi) name="sendmsg" >連投開始</button><button type="button" onclick=check2() >最大文字数</button><button id="rununi2" type="button" onclick=cansend(rununi2) name="sendmsg"  >ユニコ手動投下</button>`;
         return;
     }
     msg = msg.repeat(x);
@@ -610,7 +610,7 @@ function rununi() {
 function stop() {
     loop=false;
     logbar("連投停止しました");
-    document.getElementById('but').innerHTML =`<button type="button" onclick=cansend(rununi) name="sendmsg" >連投開始</button>`
+    document.getElementById('but').innerHTML =`<button id="rununi" type="button" onclick=cansend(rununi) name="sendmsg" >連投開始</button><button type="button" onclick=check2() >最大文字数</button><button id="rununi2" type="button" onclick=cansend(rununi2) name="sendmsg"  >ユニコ手動投下</button>`
 }
 
 function rununi2() {
@@ -678,7 +678,7 @@ function load() {
     });
 }
 function uniPad() {
-    let unico = ["url﷽.co ","꙰⃟","ܑ", "ܰ", "ܱ", "ܲ", "ܳ", "ܴ", "ܵ", "ܶ", "ܷ", "ܸ", "ܹ", "ܺ", "ܻ", "ܼ", "ܽ", "ܾ", "ܿ", "݀", "݁", "݂", "݃", "݄", "݅", "݆", "݇", "݈", "݉", "݊", "ૺ", "ૻ", "ૼ", "ੈ", "଼", "ิ", "ุ", "ฺ", "้", "ີ", "ⷣ", "ⷵ", "ⷨ", "֦", "֘"];
+    let unico = ["ﭱ.ﭱurl.co","꙰⃟","ܑ", "ܰ", "ܱ", "ܲ", "ܳ", "ܴ", "ܵ", "ܶ", "ܷ", "ܸ", "ܹ", "ܺ", "ܻ", "ܼ", "ܽ", "ܾ", "ܿ", "݀", "݁", "݂", "݃", "݄", "݅", "݆", "݇", "݈", "݉", "݊", "ૺ", "ૻ", "ૼ", "ੈ", "଼", "ิ", "ุ", "ฺ", "้", "ີ", "ⷣ", "ⷵ", "ⷨ", "֦", "֘"];
     let uniP = document.getElementById("uniPad");
     let unibut = "";
     uniP.innerHTML = "";
