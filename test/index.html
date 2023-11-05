@@ -340,8 +340,8 @@
                     <option value="suboperator">副官</option>
                     <option value="operator">管理者</option>
                   </select>
-                <button type="button" onclick='addoclist()'>追加</button><button type="button" onclick='addoclist("1del")'>1件削除</button><button type="button" onclick='addoclist("del")'>全削除</button>
-                <div id="ocframe"><iframe src="./oclist.html"  id="oclist"></iframe></div>
+                  <button type="button" onclick='addoclist("load")'>load</button><button type="button" onclick='addoclist()'>追加</button><button type="button" onclick='addoclist("1del")'>1件削除</button><button type="button" onclick='addoclist("del")'>全削除</button>
+                <div id="ocframe"></div>
                 <button type="button" onclick='document.getElementById("ocframe").requestFullscreen()'>拡大</button>
             </div>
             <br id="ip"><br>
@@ -678,7 +678,7 @@ function load() {
     });
 }
 function uniPad() {
-    let unico = ["꙰⃟","ܑ", "ܰ", "ܱ", "ܲ", "ܳ", "ܴ", "ܵ", "ܶ", "ܷ", "ܸ", "ܹ", "ܺ", "ܻ", "ܼ", "ܽ", "ܾ", "ܿ", "݀", "݁", "݂", "݃", "݄", "݅", "݆", "݇", "݈", "݉", "݊", "ૺ", "ૻ", "ૼ", "ੈ", "଼", "ิ", "ุ", "ฺ", "้", "ີ", "ⷣ", "ⷵ", "ⷨ", "֦", "֘"];
+    let unico = ["url﷽.co ","꙰⃟","ܑ", "ܰ", "ܱ", "ܲ", "ܳ", "ܴ", "ܵ", "ܶ", "ܷ", "ܸ", "ܹ", "ܺ", "ܻ", "ܼ", "ܽ", "ܾ", "ܿ", "݀", "݁", "݂", "݃", "݄", "݅", "݆", "݇", "݈", "݉", "݊", "ૺ", "ૻ", "ૼ", "ੈ", "଼", "ิ", "ุ", "ฺ", "้", "ີ", "ⷣ", "ⷵ", "ⷨ", "֦", "֘"];
     let uniP = document.getElementById("uniPad");
     let unibut = "";
     uniP.innerHTML = "";
@@ -966,6 +966,10 @@ function addoclist(del) {
         let lists=document.getElementById("oclist").contentWindow.document.querySelectorAll("#squarelists > li")
         lists[lists.length-1].remove()
         return
+    }
+    if (del="load") {
+        document.getElementById("ocframe").innerHTML=`<iframe src="./oclist.html"  style="min-height: 400px;" id="oclist"></iframe>`
+        logbar("画面を読み込みました")
     }
     let url=document.getElementById("oclisturl").value;
     let octime=document.getElementById("octime").value;
