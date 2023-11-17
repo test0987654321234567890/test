@@ -598,8 +598,11 @@ function rununi() {
     } else {
         if (document.getElementById("unitype").value=="share") {
             loopSleep(xx, rate, function(i) {
-        location.href="line://msg/text/"+msg;
-        document.getElementById('loop').value = xx - i - 1;
+                let S="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	            let N=16
+	            let rand=Array.from(Array(N)).map(()=>S[Math.floor(Math.random()*S.length)]).join('')
+                location.href="line://msg/text/"+rand+msg;
+                document.getElementById('loop').value = xx - i - 1;
     });
 }}
     
@@ -683,7 +686,7 @@ function uniPad() {
     let unibut = "";
     uniP.innerHTML = "";
     for (var i = 0; i < unico.length; ++i) {
-        unibut = unibut + `<button type="button" onclick=setuni("${unico[i]}") class="unicpad" >${unico[i]}</button>`;
+        unibut = unibut + `<button type="button" onclick=setuni('${unico[i]}') class="unicpad" >${unico[i]}</button>`;
     }
     uniP.innerHTML = unibut;
 }
