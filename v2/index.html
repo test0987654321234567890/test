@@ -599,7 +599,7 @@ function rununi() {
         if (document.getElementById("unitype").value=="share") {
             loopSleep(xx, rate, function(i) {
                 let S="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	            let N=16
+	            let N=8
 	            let rand=Array.from(Array(N)).map(()=>S[Math.floor(Math.random()*S.length)]).join('')
                 location.href="line://msg/text/"+rand+msg;
                 document.getElementById('loop').value = xx - i - 1;
