@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>覗き見ツール</title>
+</head>
+<body>
+<style>
+body{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        background-color: #222;
+        color: #FFF;
+}
+button {
+padding: 4px 12px;
+outline: none;
+border-radius: 3px;
+background-color: #06c755;
+font-size: 12px;
+line-height: 24px;
+font-weight: 700;
+color: #fff;
+border:none;
+margin: 2px;
+}
+input,textarea,pre {
+flex: 1 1 auto;
+line-height: 30px;
+padding: 0 4px 0 13px;
+font-size: 16px;
+font-weight: 400;
+outline: none;
+border: solid 1px #aaa;
+border-radius: 5px;
+margin: 2px;
+margin: 0 5px;
+}
+textarea{
+width: 98%;
+height: 400px;
+}
+iframe {
+border: 1px solid black;
+width: 100%; 
+}
+select {
+font-size: 0.9rem;
+padding: 2px 5px;
+}
+
+.message-right{
+        max-width: 100%;
+}
+
+.line-header .title span {
+        font-size: 8px;
+        color: #FFF;
+        padding: 0 auto;
+}
+
+.line-body {
+        width: 100%;
+}
+
+.line-footer {
+        width: 100%;
+        height: 60px;
+        position: relative;
+}
+
+
+
+.chat-row{
+        display: flex;
+        justify-content: center;
+        align-items: middle;
+        flex-direction: column;
+}
+
+.chat-row .datetime span {
+        margin: 4px;
+        padding: 4px 8px;
+        color: #fff;
+        font-size: 12px;
+        background: rgb(38, 48, 68, 0.3);
+        border-radius: 20px;
+}
+
+.message {
+        display: flex;
+        flex-wrap: nowrap;
+        min-width: 100%;
+}
+
+
+.message-left {
+        width: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+}
+
+.message-left .icon {
+        border-radius: 20px;
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+        line-height: 40px;
+        text-align: center;
+}
+
+.message-left .icon span {
+        font-size: 24px;
+        color: #FFF;
+        padding: 0 auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+}
+
+.message-right {
+        flex: 1;
+        padding-bottom: 15px;
+        flex-direction: column;
+}
+
+
+.message-right .message-username {
+        color: #FFF;
+        letter-spacing: -.5px;
+        display: flex;
+        justify-content: start;
+        align-items: button;
+}
+
+.message-right .message-username span {
+        font-size: 11px;
+}
+
+.message-right .message-body {
+        position: relative;
+        display: inline-block;
+        margin: 1px 8px 4px 4px;
+        margin-left: 16px;
+        padding: 4px 8px;
+        color: #555;
+        background: #fff;
+        border-radius: 8px;
+        max-width: 100%;
+}
+
+.message-right .message-body:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -25px;
+        margin-top: -14px;
+        border: 10px solid transparent;
+        border-right: 20px solid #fff;
+
+
+}
+
+.message-right .message-body .replay {
+        font-size: 0.8em;
+        position: relative;
+        display: inline-block;
+        padding: 0.15em 0.25em;
+        margin-bottom: 0.25em;
+        color: #FFF;
+        background: #fd9535;
+        border: solid 1px #d27d00;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+        text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+
+.message-right .message-body .replay_line {
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px solid #bcbcbc;
+}
+
+.message-right .message-body span {
+        font-size: 14px;
+        margin: 0;
+        padding: 0;
+}
+
+.message-body {
+        position: relative;
+}
+
+.messages-time {
+        position:absolute;
+        right:3px;
+        margin-top: -2px;
+        color: #FFF;
+}
+
+.message-right .messages-time span {
+        font-size: 12px;
+        padding: 0;
+}
+
+.line-footer .scroll {
+        width: 100%;
+        height: 45px;
+        position: absolute;
+        top: -45px;
+        z-index: 100;
+        display: flex;
+        justify-content: flex-end;
+}
+
+.line-footer .scroll .scroll--button {
+        width: 40px;
+        height: 40px;
+        margin: 0 4px;
+        background: rgba(92, 107, 128, 0.8);
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: #eff1f5;
+}
+
+.line-footer .scroll .scroll--button a {
+        color: #eff1f5;
+}
+
+.line-footer .search {
+        width: 100%;
+        height: 40px;
+        background: #FFFFFF;
+        display: flex;
+}
+
+
+.line-footer .usernames {
+        display: block;
+        width: 100px;
+        height: 35px;
+        padding: 2px 8px;
+        background-color: #eff1f5;
+        box-shadow: none;
+        color: #5c6b80;
+        overflow: scroll;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+}
+
+.line-footer .usernames span {
+        color: #5c6b80;
+        font-size: 10px;
+        letter-spacing: -1px;
+}
+
+.line-footer .reset {
+        width: 40px;
+        height: 40px;
+        background-color: #5c6b80;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: #FFF;
+        font-size: 8px;
+        letter-spacing: -2px;
+        border-radius: 2px;
+}
+
+.msg{
+        overflow-wrap: break-word;
+}
+.username{
+        color: #fff;
+        font-size: 13px;
+}
+.mention{
+        color: #0084ff;
+        font-size: 13px;
+}
+</style>
+<h1>覗き見ツール</h1>
+<p>パスワード:<input type="text" id="pass" onfocus="show()" onblur="hide()" value="free"></p>
+<p>URL:<input type="text" id="url" value=""><button type="button" onclick= get() >GO !</button><button type="button" onclick= kankaku() >Capture</button></p>
+<button type="button" onclick="{document.getElementById('chat_log').innerHTML='';document.getElementById('outlog').value=''}">ログを削除</button>
+<br><br><div class="line-body" id="scroll_container">
+    <div class="chat-row" id="chat_log">
+    </div>
+</div>
+<br><br><h3>ログ</h3><button type="button" onclick='clip("outlog")'>Copy</button>
+<textarea id="outlog"></textarea>
+<style id="css"></style>
+<script>
+
+function escape_html (string) {
+  if(typeof string !== 'string') {
+    return string;
+  }
+  return string.replace(/[&'`"<>]/g, function(match) {
+    return {
+      '&': '&amp;',
+      "'": '&#x27;',
+      '`': '&#x60;',
+      '"': '&quot;',
+      '<': '&lt;',
+      '>': '&gt;',
+    }[match]
+  });
+}
+
+function clip(id) {
+    let input=document.getElementById(id)
+    input.select();
+    document.execCommand("copy");
+    alert("コピーしました");
+}
+async function isSQ(tic) {
+    let res=await fetch("https://piloking-api.deno.dev/"+tic)
+    res=await res.json()
+    if(res["err"]){
+        return false
+    }
+    return true
+}
+
+function show() {
+    document.getElementById("pass").value=pass;
+}
+function hide() {
+    pass=document.getElementById("pass").value;
+    document.getElementById("pass").value="*".repeat(pass.length);
+}
+var logs,pass;
+var tim=10;
+if (localStorage.getItem("pass")) {
+    pass=localStorage.getItem("pass")
+}else{
+    pass="none"
+}
+document.getElementById("pass").value="*".repeat(pass.length);
+async function kankaku() {
+let url = document.getElementById("url").value;
+let type = "不正なurlです";
+var tic;
+let urll = 0;
+url = url.replace("line.me/ti/g2/", "line://ti/g2/");
+url = url.replace("line.me/S/", "line://");
+url = url.replace("line.me/R/", "line://");
+url = url.replace("line.naver.jp/R/", "line://");
+url = url.replace("line.naver.jp/S/", "line://");
+url = url.replace("http://", "");
+url = url.replace("https://", "");
+urll = url.lastIndexOf("line://");
+url = url.substr(urll);
+if (url.substr(7, 6) == "ti/g2/") {
+type = "招待リンク";
+var s = url.substr(13);
+tic = "";
+for (var i = 0; i < s.length; ++i) {
+if (s.charAt(i) == "?") {
+break
+} else {
+tic = tic + s.charAt(i)
+}
+}
+} else if (url.substr(7, 14) == "square/report?") {
+type = "通報リンク";
+tic = "";
+var s = url.substr(21);
+s = s.substr(s.lastIndexOf("ticket=") + 7);
+s = s + "&";
+s = s.substring(0, s.indexOf("&"));
+tic = s;
+} else if (url.substr(7, 12) == "square/join?") {
+type = "参加リンク";
+tic = "";
+var s = url.substr(19);
+s = s.substr(s.lastIndexOf("ticket=") + 7);
+s = s + "&";
+s = s.substring(0, s.indexOf("&"));
+tic = s;
+}
+if (tic) {
+let SQ=await isSQ(tic)
+if(SQ){
+alert("記録開始");
+localStorage.setItem("pass",pass)
+setTimeout(interval,tim,tic,pass)
+} else {
+alert("不正なurlです");
+};
+} else {
+alert("不正なurlです");
+};
+}
+
+async function interval(tic,pass) {
+let res=await fetch("https://oc-nozoki-x.deno.dev/"+tic+"?pass="+pass+"&isWait=true")
+if (!res.ok) {
+    setTimeout(interval,tim,tic,pass)
+    return
+}
+var resj=await res.json()
+var th1="",th2="",th3="",th4="",th5="",th6="",logtxt
+if (resj.type=="text") {
+th3="テキスト"
+logtxt=resj.text
+if (resj.mention) {
+var text=""
+var txt=resj.text
+for (let i = 0; i < resj.mention.length; i++) {
+const e = resj.mention[i];
+if(resj.mention[i-1]){
+text+=txt.substring(Number(resj.mention[i-1]["E"]),Number(e["S"]))+`<a class='mention' onclick="javascript:alert('メンション : ${e["M"]}')">`+txt.substring(Number(e["S"]),Number(e["E"]))+"</a>"
+}else{
+text+=txt.substring(0,Number(e["S"]))+`<a class='mention' onclick="javascript:alert('メンション : ${e["M"]}')">`+txt.substring(Number(e["S"]),Number(e["E"]))+"</a>"
+}
+if (!resj.mention[i+1]) {
+text+=txt.substring(Number(e["E"]))
+}
+}
+th4=text.replaceAll("\n","<br>")
+} else {
+th4=resj.text.replaceAll("\n","<br>")
+}
+if (th4.length>1000) {
+    th4=th4.slice(0,1000)
+}
+}else if(resj.type=="flex"){
+th4=`<a onclick="javascript:alert('flex メッセージ')">==FLEX==</a>`
+logtxt="<FLEX>"
+}else if(resj.type=="sticker"){
+th4=`<a onclick="javascript:alert('スタンプ メッセージ')">==スタンプ==</a>`
+logtxt="<スタンプ>"
+}else if(resj.type=="unsend/delete"){
+th4=`<a onclick="javascript:alert('送信取り消し/削除')">==送信取り消し/削除==</a>`
+logtxt="<送信取り消し/削除>"
+}else if(resj.type=="file"){
+th4=`<a onclick="javascript:alert('ファイル メッセージ')">==ファイル==</a>`
+logtxt="<ファイル>"
+}else if(resj.type=="note"){
+th4=resj.text.replaceAll("\n","<br>")
+th4=`<a onclick="javascript:alert('ノート メッセージ')">==ノート==</a><br>`+th4
+logtxt="<ノート>\n"+resj.text
+}else{
+th4=`<a onclick="javascript:alert('その他')">==画像/動画/その他==</a><br>`+th4
+logtxt="<画像/動画/その他>"
+}
+if (resj.isBOT) {
+th1="BOT"
+th2="BOT"
+}else{
+resj.userInfo.forEach(e => {
+if (e.pid==resj.sendBy) {
+th1=e.name
+th2=e.pid
+}
+});
+}
+let dateTime = new Date();
+dateTime=(dateTime.toLocaleTimeString()).substr(0,5)
+document.getElementById("outlog").value+=dateTime+" "+th1+"\n"+logtxt+"\n"
+
+th1=escape_html(th1)
+th2=escape_html(th2)
+th4=escape_html(th4)
+
+document.getElementById("chat_log").innerHTML+=`
+<div class="message">
+            <div class="message-right">
+                <div class="message-username">
+                    <a class="username" href="javascript:alert('UserInfo\\nId : ${th2}\\nName : ${th1}')">${th1}</a>
+                </div>
+                <div class="message-body">
+                    <span class="msg">${th4}</span>
+                </div><span class="time">${dateTime}</span>
+            </div>
+        </div>`
+
+tim=10
+setTimeout(interval,tim,tic,pass)
+
+}
+
+async function get() {
+let url = document.getElementById("url").value;
+let type = "不正なurlです";
+var tic;
+let urll = 0;
+url = url.replace("line.me/ti/g2/", "line://ti/g2/");
+url = url.replace("line.me/S/", "line://");
+url = url.replace("line.me/R/", "line://");
+url = url.replace("line.naver.jp/R/", "line://");
+url = url.replace("line.naver.jp/S/", "line://");
+url = url.replace("http://", "");
+url = url.replace("https://", "");
+urll = url.lastIndexOf("line://");
+url = url.substr(urll);
+if (url.substr(7, 6) == "ti/g2/") {
+type = "招待リンク";
+var s = url.substr(13);
+tic = "";
+for (var i = 0; i < s.length; ++i) {
+if (s.charAt(i) == "?") {
+break
+} else {
+tic = tic + s.charAt(i)
+}
+}
+} else if (url.substr(7, 14) == "square/report?") {
+type = "通報リンク";
+tic = "";
+var s = url.substr(21);
+s = s.substr(s.lastIndexOf("ticket=") + 7);
+s = s + "&";
+s = s.substring(0, s.indexOf("&"));
+tic = s;
+} else if (url.substr(7, 12) == "square/join?") {
+type = "参加リンク";
+tic = "";
+var s = url.substr(19);
+s = s.substr(s.lastIndexOf("ticket=") + 7);
+s = s + "&";
+s = s.substring(0, s.indexOf("&"));
+tic = s;
+}
+if (tic) {
+
+console.log(Date.now())
+localStorage.setItem("pass",pass)
+let res=await fetch("https://oc-nozoki-x.deno.dev/"+tic+"?pass="+pass)
+var resj=await res.json()
+var th1="",th2="",th3="",th4="",th5="",th6="",logtxt
+if (resj.type=="text") {
+th3="テキスト"
+logtxt=resj.text
+if (resj.mention) {
+var text=""
+var txt=resj.text
+for (let i = 0; i < resj.mention.length; i++) {
+const e = resj.mention[i];
+if(resj.mention[i-1]){
+text+=txt.substring(Number(resj.mention[i-1]["E"]),Number(e["S"]))+`<a class='mention' onclick="javascript:alert('メンション : ${e["M"]}')">`+txt.substring(Number(e["S"]),Number(e["E"]))+"</a>"
+}else{
+text+=txt.substring(0,Number(e["S"]))+`<a class='mention' onclick="javascript:alert('メンション : ${e["M"]}')">`+txt.substring(Number(e["S"]),Number(e["E"]))+"</a>"
+}
+if (!resj.mention[i+1]) {
+text+=txt.substring(Number(e["E"]))
+}
+}
+th4=text.replaceAll("\n","<br>")
+} else {
+th4=resj.text.replaceAll("\n","<br>")
+}
+if (th4.length>1000) {
+    th4=th4.slice(0,1000)
+}
+}else if(resj.type=="flex"){
+th4=`<a onclick="javascript:alert('flex メッセージ')">==FLEX==</a>`
+logtxt="<FLEX>"
+}else if(resj.type=="sticker"){
+th4=`<a onclick="javascript:alert('スタンプ メッセージ')">==スタンプ==</a>`
+logtxt="<スタンプ>"
+}else if(resj.type=="unsend/delete"){
+th4=`<a onclick="javascript:alert('送信取り消し/削除')">==送信取り消し/削除==</a>`
+logtxt="<送信取り消し/削除>"
+}else if(resj.type=="file"){
+th4=`<a onclick="javascript:alert('ファイル メッセージ')">==ファイル==</a>`
+logtxt="<ファイル>"
+}else if(resj.type=="note"){
+th4=resj.text.replaceAll("\n","<br>")
+th4=`<a onclick="javascript:alert('ノート メッセージ')">==ノート==</a><br>`+th4
+logtxt="<ノート>\n"+resj.text
+}else{
+th4=`<a onclick="javascript:alert('その他')">==画像/動画/その他==</a><br>`+th4
+logtxt="<画像/動画/その他>"
+}
+if (resj.isBOT) {
+th1="BOT"
+th2="BOT"
+}else{
+resj.userInfo.forEach(e => {
+if (e.pid==resj.sendBy) {
+th1=e.name
+th2=e.pid
+}
+});
+}
+let dateTime = new Date();
+dateTime=(dateTime.toLocaleTimeString()).substr(0,5)
+document.getElementById("outlog").value+=dateTime+" "+th1+"\n"+logtxt+"\n"
+
+th1=(th1)
+th2=(th2)
+th4=(th4)
+document.getElementById("chat_log").innerHTML+=`
+<div class="message">
+            <div class="message-right">
+                <div class="message-username">
+                    <a class="username" onclick="javascript:alert('UserInfo\\nId : ${th2}\\nName : ${th1}')">${th1}</a>
+                </div>
+                <div class="message-body">
+                    <span class="msg">${th4}</span>
+                </div><span class="time">${dateTime}</span>
+            </div>
+        </div>`
+
+} else {
+alert("不正なurlです");
+};
+}
+</script>
+</body>
+</html>
