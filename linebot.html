@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE BOT Example</title>
+</head>
+<body>
+    <div>
+        <h3><a id="getProfile">getProfile</a></h3>
+    </div>
+    <script src="https://line-selfbot--dev.deno.dev/js/line.js"></script>
+    <script>
+        const Line = new LineClient(target)
+        document.getElementById("getProfile").addEventListener("click",async (e)=>{
+            e.preventDefault()
+            alert(JSON.stringify(await Line.getProfile()))
+        })
+    </script>
+</body>
+</html>
